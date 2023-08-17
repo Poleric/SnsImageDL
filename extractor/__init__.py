@@ -1,7 +1,7 @@
 import re
-from .exceptions import ExtractorError
-from .twitter import TWITTER_REGEX, save_tweet_media
-from .pixiv import PIXIV_REGEX, save_pixiv_media
+from extractor.exceptions import ExtractorError
+from extractor.twitter import TWITTER_REGEX, save_tweet_media
+from extractor.pixiv import PIXIV_REGEX, save_pixiv_media
 
 
 class NotValidQuery(ExtractorError):
