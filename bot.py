@@ -1,3 +1,5 @@
+import os
+
 import discord
 from discord.ext import commands
 import logging
@@ -5,6 +7,11 @@ import logging
 from extractor import save_media, NotValidQuery
 from extractor.exceptions import ScrapingException
 
+
+BOT_TOKEN = os.getenv("DISCORD_BOT_TOKEN")
+if not BOT_TOKEN:
+    logging.exception("DISCORD_BOT_TOKEN is required. Set the bot token as an environment variable with the key DISCORD_BOT_TOKEN")
+    exit()
 
 discord.utils.setup_logging()
 bot = commands.Bot(
@@ -39,7 +46,7 @@ async def save(ctx, msg: discord.Message):
 
 
 async def main():
-    await bot.start("ODE0MDE0MDkzODc3OTY4ODk3.YDXrsw.98uponQ0gPtP3aLxmRCZWnf6JR8")
+    await bot.start(BOT_TOKEN)
 
 
 if __name__ == "__main__":
