@@ -3,15 +3,16 @@ import os
 import discord
 from discord.ext import commands
 import logging
+import sys
 
 from extractor import save_media, NotValidQuery
-from extractor.exceptions import ScrapingException
+from extractor.exceptions import ScrapingException, MediaNotFound
 
 
 BOT_TOKEN = os.getenv("DISCORD_BOT_TOKEN")
 if not BOT_TOKEN:
     logging.exception("DISCORD_BOT_TOKEN is required. Set the bot token as an environment variable with the key DISCORD_BOT_TOKEN")
-    exit()
+    sys.exit()
 
 discord.utils.setup_logging()
 bot = commands.Bot(
@@ -25,8 +26,9 @@ bot = commands.Bot(
 
 @bot.listen()
 async def on_message(msg: discord.Message):
-    ctx = await bot.get_context(msg)
-    await ctx.invoke(save, msg=msg)
+    if msg.embeds:
+        ctx = await bot.get_context(msg)
+        await ctx.invoke(save, msg=msg)
 
 
 @commands.command()
@@ -38,6 +40,9 @@ async def save(ctx, msg: discord.Message):
     except NotValidQuery:
         logging.exception(f"Saving {clean_content} is not supported yet.")
         await msg.add_reaction("❓")
+    except MediaNotFound:
+        logging.exception(f"Media is not found {clean_content}.")
+        await msg.add_reaction("❌")
     except ScrapingException:
         logging.exception(f"Error encountered when saving {clean_content}")
         await msg.add_reaction("❌")

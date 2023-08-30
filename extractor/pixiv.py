@@ -3,6 +3,7 @@ from pixivpy3.utils import PixivError
 import re
 import os
 import logging
+import sys
 
 from extractor.exceptions import MediaNotFound
 
@@ -17,7 +18,7 @@ _pixiv_api = None
 REFRESH_TOKEN = os.getenv("PIXIV_REFRESH_TOKEN")
 if not REFRESH_TOKEN:
     logging.exception("PIXIV_REFRESH_TOKEN is required. Refer to https://gist.github.com/ZipFile/c9ebedb224406f4f11845ab700124362 to get your refresh token and add it into the environment variable with the name PIXIV_REFRESH_TOKEN")
-    exit()
+    sys.exit()
 
 
 def get_global_pixiv() -> AppPixivAPI:
