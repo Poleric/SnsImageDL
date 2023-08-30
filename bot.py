@@ -31,7 +31,7 @@ async def on_message(msg: discord.Message):
         await ctx.invoke(save, msg=msg)
 
 
-@commands.command()
+@bot.command()
 async def save(ctx, msg: discord.Message):
     clean_content = msg.content.strip("<>|\"")
 
