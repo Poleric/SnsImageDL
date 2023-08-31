@@ -4,11 +4,13 @@ import discord
 from discord.ext import commands
 import logging
 import sys
+import re
 
 from extractor import save_media, NotValidQuery
 from extractor.exceptions import ScrapingException, MediaNotFound
 
 
+URL_REGEX = r"https?:\/\/(www\.)?[-a-zA-Z0-9@:%._\+~#=]{2,256}\.[a-z]{2,4}\b([-a-zA-Z0-9@:%_\+.~#?&//=]*)"
 BOT_TOKEN = os.getenv("DISCORD_BOT_TOKEN")
 if not BOT_TOKEN:
     logging.exception("DISCORD_BOT_TOKEN is required. Set the bot token as an environment variable with the key DISCORD_BOT_TOKEN")
@@ -26,25 +28,26 @@ bot = commands.Bot(
 
 @bot.listen()
 async def on_message(msg: discord.Message):
-    if msg.embeds:
+    clean_content = msg.content.strip("<>|\"")
+    if clean_content.startswith("http"):  # might be a url
         ctx = await bot.get_context(msg)
         await ctx.invoke(save, msg=msg)
 
 
 @bot.command()
 async def save(ctx, msg: discord.Message):
-    clean_content = msg.content.strip("<>|\"")
+    url = re.search(URL_REGEX, msg.content)[0]
 
     try:
-        save_media(clean_content)
+        save_media(url)
     except NotValidQuery:
-        logging.exception(f"Saving {clean_content} is not supported yet.")
+        logging.exception(f"Saving {url} is not supported yet.")
         await msg.add_reaction("❓")
     except MediaNotFound:
-        logging.exception(f"Media is not found {clean_content}.")
+        logging.exception(f"Media is not found {url}.")
         await msg.add_reaction("❌")
     except ScrapingException:
-        logging.exception(f"Error encountered when saving {clean_content}")
+        logging.exception(f"Error encountered when saving {url}")
         await msg.add_reaction("❌")
     else:  # no errors
         await msg.add_reaction("✅")
