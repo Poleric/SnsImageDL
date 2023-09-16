@@ -2,6 +2,7 @@ import os
 
 import discord
 from discord.ext import commands
+from discord.ext.commands import Context
 import logging
 import sys
 import re
@@ -28,14 +29,13 @@ bot = commands.Bot(
 
 @bot.listen()
 async def on_message(msg: discord.Message):
-    clean_content = msg.content.strip("<>|\"")
-    if clean_content.startswith("http"):  # might be a url
+    if re.search(URL_REGEX, msg.content):  # might be a url
         ctx = await bot.get_context(msg)
         await ctx.invoke(save, msg=msg)
 
 
 @bot.command()
-async def save(ctx, msg: discord.Message):
+async def save(ctx: Context, msg: discord.Message):
     url = re.search(URL_REGEX, msg.content)[0]
 
     try:

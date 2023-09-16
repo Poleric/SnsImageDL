@@ -13,7 +13,7 @@ PathLike = Union[str, bytes, PathLike]
 
 
 logger = logging.getLogger(__name__)
-PIXIV_REGEX = r"https://www.pixiv.net/en/artworks/([0-9]+)"
+PIXIV_REGEX = r"https://www.p.?ixiv.net/en/artworks/([0-9]+)"
 _pixiv_api = None
 REFRESH_TOKEN = os.getenv("PIXIV_REFRESH_TOKEN")
 if not REFRESH_TOKEN:
@@ -71,8 +71,8 @@ def get_pixiv_media_urls(data: dict) -> list[str]:
     return urls
 
 
-def save_pixiv_media(url, pixiv_out_dir: PathLike = "./pixiv_media", **kwargs):
-    os.makedirs(pixiv_out_dir, exist_ok=True)
+def save_pixiv_media(url, out_dir: PathLike = "./pixiv_media"):
+    os.makedirs(out_dir, exist_ok=True)
 
     illust = get_pixiv_illust(url)
     img_urls = get_pixiv_media_urls(illust)
@@ -82,7 +82,7 @@ def save_pixiv_media(url, pixiv_out_dir: PathLike = "./pixiv_media", **kwargs):
     for img_url in img_urls:
         for i in range(3):
             try:
-                if api.download(img_url, path=pixiv_out_dir):
+                if api.download(img_url, path=out_dir):
                     pass
                 break
             except PixivError:
@@ -99,5 +99,3 @@ if __name__ == "__main__":
 
     for url in urls:
         save_pixiv_media(url, out_dir="./pixiv_img")
-
-

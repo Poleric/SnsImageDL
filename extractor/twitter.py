@@ -24,7 +24,7 @@ class TweetDeleted(MediaNotFound):
 
 
 logger = logging.getLogger(__name__)
-TWITTER_REGEX = r"https://.*twitter.com/.+/status/([0-9]+)"
+TWITTER_REGEX = r"https://.*(?:twitter|x).com/.+/status/([0-9]+)"
 
 #  Twitter dont care what value the token field, as long it exists.
 #
@@ -84,34 +84,6 @@ TWITTER_REGEX = r"https://.*twitter.com/.+/status/([0-9]+)"
 #
 #
 # def get_token(tweet_id: str) -> str:
-#     """A function in Twitter js code that generates token for each tweet.
-#
-#     from the (obfuscated) source code:
-#     Line 131 from embed.Tweet.<some_random_hash>.js (slightly modified to be easier to read)
-#     s = Number
-#     a = window.Math
-#     o = function(e) {
-#         return e.toString(Math.pow(6, 2))
-#     }
-#     c = function(e) {
-#         return e.replace(/(0+|\.)/g, "")
-#     }
-#     u = function(e) {
-#         this.Tweet = function(e) {
-#             return {
-#                 fetch: function(t, r) {
-#                     return e.get("tweet-result", (0,
-#                     n.Z)({}, t, {
-#                         token: c(o(s(t.id) / 1e15 * a.PI))  <--- important bit
-#                     }), r).then((function(e) {
-#                         return e && (e.id_str || "TweetTombstone" === e.__typename) ? Promise.resolve(e) : Promise.reject(new Error("could not parse api response"))
-#                     }
-#                     ))
-#                 }
-#             }
-#         }(e)
-#     }
-#     """
 #     """
 #     From the js code, it
 #     1. int(tweet_id) / 10**15 * PI
@@ -170,8 +142,8 @@ def get_tweet_embed_json(url: str) -> dict:
     return data
 
 
-def save_tweet_media(url: str, twitter_our_dir: PathLike = "./twitter_media", **kwargs) -> None:
-    os.makedirs(twitter_our_dir, exist_ok=True)
+def save_tweet_media(url: str, out_dir: PathLike = "./twitter_media") -> None:
+    os.makedirs(out_dir, exist_ok=True)
 
     data = get_tweet_embed_json(url)
 
@@ -181,11 +153,10 @@ def save_tweet_media(url: str, twitter_our_dir: PathLike = "./twitter_media", **
     for media_url in get_media_urls_from_embed_json(data):
         try:
             filename = urlparse(media_url).path.rsplit("/", 1)[-1]
-            download_source_url(media_url, f"{twitter_our_dir}/{filename}")
+            download_source_url(media_url, f"{out_dir}/{filename}")
         except requests.exceptions:
             logger.exception(f"Error encountered when downloading {media_url}")
 
 
 if __name__ == "__main__":
     save_tweet_media("https://twitter.com/hagoonha/status/1696463808259342624")
-
