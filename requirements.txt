@@ -1,3 +1,4 @@
 pixivpy3
 discord.py
 requests
+filetype
