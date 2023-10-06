@@ -7,6 +7,7 @@ Automatically downloads any medias from supported links when sent in a Discord c
 
 - Twitter
 - Pixiv
+- dcinside
 
 ## TODO
-- Support dcinside, Reddit.
+- Support Reddit.
