@@ -35,10 +35,8 @@ async def on_message(msg: discord.Message):
             save_media(url[0])
         except MediaNotFound:
             logging.exception(f"Media is not found {url}.")
-            await msg.add_reaction("❌")
         except ScrapingException:
             logging.exception(f"Error encountered when saving {url}")
-            await msg.add_reaction("❌")
         else:  # no errors
             await msg.add_reaction("✅")
 
