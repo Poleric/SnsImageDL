@@ -1,4 +1,6 @@
 pixivpy3
 discord.py
 requests
+BeautifulSoup4
+lxml
 filetype
