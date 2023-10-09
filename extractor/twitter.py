@@ -83,8 +83,8 @@ def save_tweet_media(url: str, out_dir: PathLike = "./twitter_media") -> None:
 
     for media_url in get_media_urls_from_embed_json(data):
         try:
-            filename = urlparse(media_url).path.rsplit("/", 1)[-1]
-            download_source_url(media_url, out_dir=out_dir, file_name=filename, file_ext="")
+            filename = urlparse(media_url).path.rsplit("/", 1)[-1]  # file name already have extension
+            download_source_url(media_url, out_dir=out_dir, file_name=filename, file_ext=None)
         except requests.exceptions.RequestException:
             logger.exception(f"Error encountered when downloading {media_url}")
 
