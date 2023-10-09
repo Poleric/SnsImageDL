@@ -3,9 +3,6 @@ import re
 import logging
 import os
 from urllib.parse import urlparse
-# import io
-# import math
-# import string
 
 from extractor.exceptions import ExtractorError, MediaNotFound
 from extractor.utils import download_source_url
@@ -25,72 +22,6 @@ class TweetDeleted(MediaNotFound):
 
 logger = logging.getLogger(__name__)
 TWITTER_REGEX = r"https://.*(?:twitter|x).com/.+/status/([0-9]+)"
-
-#  Twitter dont care what value the token field, as long it exists.
-#
-# CHARACTERS = string.digits + string.ascii_lowercase
-# def v8_float_to_radix(number: float, radix: int, significant_figures: int = 11) -> str:
-#     """https://github.com/v8/v8/blob/master/src/numbers/conversions.cc#L1309-L1330"""
-#
-#     integral = math.floor(number)
-#     fraction = number - integral
-#
-#     integral_builder = io.StringIO()
-#     fractional_builder = io.StringIO()
-#
-#     # handle negative sign
-#     if number < 0:
-#         integral_builder.write('-')
-#         number = -number
-#
-#     # decimal part
-#     num_of_digits_of_integral_after_radix = 1 + math.floor(math.log(integral) / math.log(radix)) if integral else 0
-#     sig_figs = 0
-#     while fraction > 0:
-#         fraction *= radix
-#
-#         digit = int(fraction)
-#         fractional_builder.write(CHARACTERS[digit])
-#         fraction -= digit
-#
-#         if digit != 0 or sig_figs:
-#             sig_figs += 1
-#
-#         if sig_figs >= significant_figures - num_of_digits_of_integral_after_radix:
-#             if fraction > 0.5 or (fraction == 0.5 and (digit & 1)):
-#                 while True:
-#                     fractional_builder.seek(fractional_builder.tell() - 1)  # move pointer back 1
-#                     if fractional_builder.tell() == 0:
-#                         integral += 1
-#                         break
-#
-#                     if digit + 1 < radix:
-#                         fractional_builder.write(CHARACTERS[digit + 1])
-#                         break
-#             break
-#
-#     # integer part
-#     if integral == 0:
-#         integral_builder.write('0')
-#     else:
-#         while integral > 0:
-#             integral, remainder = divmod(integral, radix)
-#             integral_builder.write(CHARACTERS[remainder])
-#
-#     # reverse order of
-#     result = integral_builder.getvalue()[::-1] + '.' + fractional_builder.getvalue()
-#     integral_builder.close(); fractional_builder.close()
-#     return result
-#
-#
-# def get_token(tweet_id: str) -> str:
-#     """
-#     From the js code, it
-#     1. int(tweet_id) / 10**15 * PI
-#     2. base36 encodes it
-#     3. remove "0" and "."
-#     """
-#     return re.sub(r"(0+|\.)", "", v8_float_to_radix(int(tweet_id) / 1e15 * math.pi, 36))
 
 
 def get_tweet_id(url: str) -> str:
