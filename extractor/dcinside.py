@@ -1,12 +1,13 @@
 from bs4 import BeautifulSoup
-import requests
+import aiohttp
 import os
 import logging
 import re
 
-from extractor.exceptions import ExtractorError, MediaNotFound
+from extractor.exceptions import MediaNotFound, InvalidLink
 from extractor.utils import download_source_url
 
+from aiohttp import ClientSession
 from typing import Union, Iterable
 from os import PathLike
 PathLike = Union[str, bytes, PathLike]
@@ -28,18 +29,11 @@ GALLERY_POSTS_COOKIES = {
 }
 
 
-def get_board_id(url: str) -> str:
+def get_board_post_id(url: str) -> tuple[str, str]:
     res = re.search(DCINSIDE_REGEX, url)
     if not res:
-        raise NotADcinsideLink(f"{url} is not a dcinside link.")
-    return res[1]
-
-
-def get_post_id(url: str) -> str:
-    res = re.search(DCINSIDE_REGEX, url)
-    if not res:
-        raise NotADcinsideLink(f"{url} is not a dcinside link.")
-    return res[2]
+        raise NotDcinsideLink(f"{url} is not a dcinside link.")
+    return res[1], res[2]
 
 
 def get_image_sources_from_dom(soup: BeautifulSoup) -> Iterable[str]:
@@ -48,38 +42,46 @@ def get_image_sources_from_dom(soup: BeautifulSoup) -> Iterable[str]:
             yield img["data-original"]
 
 
-def save_dcinside_media(url: str, out_dir: PathLike = "./dcinside_media") -> None:
-    os.makedirs(out_dir, exist_ok=True)
-
-    board_id = get_board_id(url)
-    post_id = get_post_id(url)
-    ret = requests.get(
+async def fetch_post_html(session: ClientSession, board_id: str, post_id: str) -> bytes:
+    async with session.get(
         DCINSIDE_URL.format(
             board_id,
             post_id
         ),
         cookies=GALLERY_POSTS_COOKIES,
         headers=HEADERS
-    )
-    ret.raise_for_status()
+    ) as res:
+        res.raise_for_status()
+        return await res.content.read()
 
-    soup = BeautifulSoup(ret.content, "lxml")
 
-    have_media = False
-    for media_url in get_image_sources_from_dom(soup):
-        have_media = True
-        try:
-            download_source_url(media_url, out_dir=out_dir, file_name=f"{board_id}_{post_id}")
-        except requests.exceptions.RequestException:
-            logger.exception(f"Error encountered when downloading {media_url}")
+async def save_dcinside_media(url: str, out_dir: PathLike = "./dcinside_media") -> list[str]:
+    os.makedirs(out_dir, exist_ok=True)
 
-    if not have_media:
-        raise MediaNotFound
+    async with aiohttp.ClientSession() as session:
+        board_id, post_id = get_board_post_id(url)
+        board_content = await fetch_post_html(session, board_id, post_id)
+
+        soup = BeautifulSoup(board_content, "lxml")
+
+        paths = []
+        for media_url in get_image_sources_from_dom(soup):
+            try:
+                paths.append(
+                    await download_source_url(session, media_url, out_dir=out_dir, filename=f"{board_id}_{post_id}")
+                )
+            except aiohttp.ClientResponseError:
+                logger.exception(f"Error encountered when downloading {media_url}")
+
+        if not paths:
+            raise MediaNotFound
+        return paths
 
 
 if __name__ == "__main__":
+    import asyncio
     # url = "https://gall.dcinside.com/m/projectmx/7579554"
     url = "https://gall.dcinside.com/mgallery/board/view/?id=projectmx&no=7579554"
     # url = "https://m.dcinside.com/board/projectmx/7579554"
 
-    save_dcinside_media(url)
+    asyncio.run(save_dcinside_media(url))

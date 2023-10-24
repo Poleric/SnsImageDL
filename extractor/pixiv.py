@@ -1,4 +1,4 @@
-from pixivpy3 import *
+from pixivpy3 import AppPixivAPI
 from pixivpy3.utils import PixivError
 import re
 import os
@@ -14,20 +14,10 @@ PathLike = Union[str, bytes, PathLike]
 
 logger = logging.getLogger(__name__)
 PIXIV_REGEX = r"https://www.p.?ixiv.net/en/artworks/([0-9]+)"
-_pixiv_api = None
 REFRESH_TOKEN = os.getenv("PIXIV_REFRESH_TOKEN")
 if not REFRESH_TOKEN:
     logging.exception("PIXIV_REFRESH_TOKEN is required. Refer to https://gist.github.com/ZipFile/c9ebedb224406f4f11845ab700124362 to get your refresh token and add it into the environment variable with the name PIXIV_REFRESH_TOKEN")
     sys.exit()
-
-
-def get_global_pixiv() -> AppPixivAPI:
-    global _pixiv_api
-    if not _pixiv_api:  # login
-        _pixiv_api = AppPixivAPI(timeout=3)
-        _pixiv_api.auth(refresh_token=REFRESH_TOKEN)
-
-    return _pixiv_api
 
 
 def get_pixiv_id(url: str) -> str:
@@ -36,15 +26,19 @@ def get_pixiv_id(url: str) -> str:
     return res[1]
 
 
-def get_pixiv_illust(url: str) -> dict:
+def get_pixiv_illust(session: AppPixivAPI, url: str) -> dict:
     # tries 3 times
-    api = get_global_pixiv()
+    illust_id = get_pixiv_id(url)
     for i in range(3):
-        json_result = api.illust_detail(get_pixiv_id(url))
-        if "error" in json_result and "invalid_grant" in json_result["error"]["message"]:
-            api.auth()
-            continue
-        return json_result.illust
+        try:
+            json_result = session.illust_detail(illust_id)
+        except TimeoutError:
+            logger.warning(f"Timeout when retrieving illustration {illust_id}")
+        else:
+            if "error" in json_result and "invalid_grant" in json_result["error"]["message"]:
+                session.auth()
+                continue
+            return json_result.illust
 
     # if no results
     raise PixivError(f"Error in retrieving {url} data")
@@ -71,18 +65,20 @@ def get_pixiv_media_urls(data: dict) -> list[str]:
     return urls
 
 
-def save_pixiv_media(url, out_dir: PathLike = "./pixiv_media"):
+async def save_pixiv_media(url, out_dir: PathLike = "./pixiv_media"):
+    pixiv_session = AppPixivAPI(timeout=3)
+    pixiv_session.auth(refresh_token=REFRESH_TOKEN)
+
     os.makedirs(out_dir, exist_ok=True)
 
-    illust = get_pixiv_illust(url)
+    illust = get_pixiv_illust(pixiv_session, url)
     img_urls = get_pixiv_media_urls(illust)
 
-    api = get_global_pixiv()
     # tries 3 times
     for img_url in img_urls:
         for i in range(3):
             try:
-                if api.download(img_url, path=out_dir):
+                if pixiv_session.download(img_url, path=out_dir):
                     pass
                 break
             except PixivError:
@@ -90,6 +86,7 @@ def save_pixiv_media(url, out_dir: PathLike = "./pixiv_media"):
 
 
 if __name__ == "__main__":
+    import asyncio
     urls = [
         "https://www.pixiv.net/en/artworks/97138089",
         "https://www.pixiv.net/en/artworks/92217855",
@@ -97,5 +94,8 @@ if __name__ == "__main__":
         "https://www.pixiv.net/en/artworks/96398887",
     ]
 
-    for url in urls:
-        save_pixiv_media(url, out_dir="./pixiv_img")
+    async def main():
+        await asyncio.gather(
+            *[save_pixiv_media(url) for url in urls]
+        )
+    asyncio.run(main())

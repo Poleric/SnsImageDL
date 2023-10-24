@@ -32,7 +32,7 @@ async def on_message(msg: discord.Message):
     url = re.search(URL_REGEX, msg.content)  # might be a url
     if url:
         try:
-            save_media(url[0])
+            await save_media(url[0])
         except MediaNotFound:
             logging.exception(f"Media is not found {url}.")
         except ScrapingException:
@@ -46,7 +46,7 @@ async def save(ctx: Context, msg: discord.Message):
     url = re.search(URL_REGEX, msg.content)[0]
 
     try:
-        save_media(url)
+        await save_media(url)
     except NotValidQuery:
         logging.exception(f"Saving {url} is not supported yet.")
         await msg.add_reaction("❓")

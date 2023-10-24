@@ -9,7 +9,7 @@ class NotValidQuery(ExtractorError):
     pass
 
 
-def save_media(query: str, *, use_twitter=True, use_pixiv=True, use_dcinside=True, **kwargs) -> None:
+async def save_media(query: str, *, use_twitter=True, use_pixiv=True, use_dcinside=True, **kwargs) -> None:
     """
     Uses the correct extractor and saves the specified query / url.
 
@@ -29,9 +29,9 @@ def save_media(query: str, *, use_twitter=True, use_pixiv=True, use_dcinside=Tru
     """
 
     if use_twitter and re.match(TWITTER_REGEX, query):
-        return save_tweet_media(query, **kwargs)
+        await save_tweet_media(query, **kwargs)
     if use_pixiv and re.match(PIXIV_REGEX, query):
-        return save_pixiv_media(query, **kwargs)
+        await save_pixiv_media(query, **kwargs)
     if use_dcinside and re.match(DCINSIDE_REGEX, query):
-        return save_dcinside_media(query, **kwargs)
+        await save_dcinside_media(query, **kwargs)
     raise NotValidQuery("The specified query type is not supported.")
