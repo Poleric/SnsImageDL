@@ -31,14 +31,14 @@ GALLERY_POSTS_COOKIES = {
 def get_board_id(url: str) -> str:
     res = re.search(DCINSIDE_REGEX, url)
     if not res:
-        raise NotADcinsideLink(f"{url} is not a Twitter link.")
+        raise NotADcinsideLink(f"{url} is not a dcinside link.")
     return res[1]
 
 
 def get_post_id(url: str) -> str:
     res = re.search(DCINSIDE_REGEX, url)
     if not res:
-        raise NotADcinsideLink(f"{url} is not a Twitter link.")
+        raise NotADcinsideLink(f"{url} is not a dcinside link.")
     return res[2]
 
 
