@@ -1,6 +1,7 @@
 import os
 
 import discord
+from discord import CustomActivity, Intents, Message
 from discord.ext import commands
 from discord.ext.commands import Context
 import logging
@@ -20,15 +21,15 @@ if not BOT_TOKEN:
 discord.utils.setup_logging()
 bot = commands.Bot(
     command_prefix=".",
-    activity=discord.CustomActivity("Watching~"),
-    intents=discord.Intents.all(),
+    activity=CustomActivity("Watching~"),
+    intents=Intents.all(),
 
     description="Downloads any media embed in a message locally."
 )
 
 
 @bot.listen()
-async def on_message(msg: discord.Message):
+async def on_message(msg: Message):
     url = re.search(URL_REGEX, msg.content)  # might be a url
     if url:
         try:
@@ -42,7 +43,7 @@ async def on_message(msg: discord.Message):
 
 
 @bot.command()
-async def save(ctx: Context, msg: discord.Message):
+async def save(ctx: Context, msg: Message):
     url = re.search(URL_REGEX, msg.content)[0]
 
     try:
