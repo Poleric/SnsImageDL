@@ -12,7 +12,7 @@ from os import PathLike
 PathLike = Union[str, bytes, PathLike]
 
 
-class NotATwitterLink(ExtractorError):
+class NotTwitterLink(InvalidLink):
     pass
 
 

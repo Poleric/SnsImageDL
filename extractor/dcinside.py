@@ -13,7 +13,7 @@ PathLike = Union[str, bytes, PathLike]
 logger = logging.getLogger(__name__)
 
 
-class NotADcinsideLink(ExtractorError):
+class NotDcinsideLink(InvalidLink):
     pass
 
 
