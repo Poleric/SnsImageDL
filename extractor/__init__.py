@@ -30,8 +30,11 @@ async def save_media(query: str, *, use_twitter=True, use_pixiv=True, use_dcinsi
 
     if use_twitter and re.match(TWITTER_REGEX, query):
         await save_tweet_media(query, **kwargs)
+        return
     if use_pixiv and re.match(PIXIV_REGEX, query):
         await save_pixiv_media(query, **kwargs)
+        return
     if use_dcinside and re.match(DCINSIDE_REGEX, query):
         await save_dcinside_media(query, **kwargs)
+        return
     raise NotValidQuery("The specified query type is not supported.")
