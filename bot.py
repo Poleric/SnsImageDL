@@ -38,8 +38,9 @@ async def on_message(msg: Message):
 
     url = re.search(URL_REGEX, msg.content)  # might be a url
     if url:
+        url = url[0]
         try:
-            await save_media(url[0])
+            await save_media(url)
         except NotValidQuery:
             logging.exception(f"{url=} is not supported.")
         except MediaNotFound:
