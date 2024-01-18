@@ -7,6 +7,10 @@ class ExtractorError(Exception):
     pass
 
 
+class SessionNotCreated(Exception):
+    pass
+
+
 class ScrapingException(ExtractorError):
     pass
 
