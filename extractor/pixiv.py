@@ -74,13 +74,13 @@ class Pixiv(Extractor):
             except PixivError:
                 self.logger.exception(f"Download {media_url} failed.")
 
-    def get_pixiv_id(self, webpage_url: str) -> str:
+    def get_pixiv_id(self, webpage_url: UrlLike) -> str:
         res = re.search(self.SITE_REGEX, webpage_url)
         if not res:
             raise NotPixivLink
         return res[1]
 
-    async def get_pixiv_illust(self, webpage_url: str) -> dict:
+    async def get_pixiv_illust(self, webpage_url: UrlLike) -> dict:
         # tries 3 times
         illust_id = self.get_pixiv_id(webpage_url)
         for i in range(3):
@@ -102,7 +102,7 @@ class Pixiv(Extractor):
         raise PixivError(f"Error in retrieving {webpage_url} data")
 
     @staticmethod
-    def get_pixiv_media_urls(data: dict) -> list[str]:
+    def get_pixiv_media_urls(data: dict) -> list[UrlLike]:
         media_urls = []
 
         match data:

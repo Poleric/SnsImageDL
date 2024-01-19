@@ -42,7 +42,7 @@ class Twitter(Extractor):
         return urlparse(source_url).path.rsplit("/", 1)[-1]
 
     # @override
-    async def retrieve_media_urls(self, webpage_url: UrlLike) -> Iterable[str]:
+    async def retrieve_media_urls(self, webpage_url: UrlLike) -> Iterable[UrlLike]:
         return self.get_media_urls_from_embed_json(
             await self.fetch_tweet_embed(webpage_url)
         )
@@ -55,7 +55,7 @@ class Twitter(Extractor):
         return res[1]
 
     @staticmethod
-    def get_media_urls_from_embed_json(data: dict) -> Iterable[str]:
+    def get_media_urls_from_embed_json(data: dict) -> Iterable[UrlLike]:
         has_media = False
 
         # a media can have both images and videos
