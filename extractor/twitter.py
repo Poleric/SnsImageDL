@@ -1,7 +1,9 @@
 import re
+import os
+import aiohttp
 from urllib.parse import urlparse
-from extractor.base import Extractor, UrlLike
-from extractor.exceptions import MediaNotFound, InvalidLink
+from extractor.base import Extractor, UrlLike, PathLike
+from extractor.exceptions import MediaNotFound, InvalidLink, SessionNotCreated
 
 from typing import Iterable
 # from typing import override
@@ -38,11 +40,30 @@ class Twitter(Extractor):
         return "Twitter"
 
     # @override
-    def get_filename(self, source_url: UrlLike):
-        return urlparse(source_url).path.rsplit("/", 1)[-1]
+    async def save(self, webpage_url: UrlLike, output_directory: PathLike = "./twitter_media", filename: str = None) -> None:
+        if not self.session:
+            raise SessionNotCreated("Session is not initialized fully. Use a context manager when saving.")
 
-    # @override
-    async def retrieve_media_urls(self, webpage_url: UrlLike) -> Iterable[UrlLike]:
+        media_urls = list(await self.get_media_urls(webpage_url))
+
+        if not media_urls:
+            raise MediaNotFound
+
+        os.makedirs(output_directory, exist_ok=True)
+        for media_url in media_urls:
+            try:
+                async with self.session.get(media_url, headers=self.HEADERS) as res:
+                    content = await res.content.read()
+            except aiohttp.ClientResponseError:
+                self.logger.exception(f"Error encountered when downloading {media_url}")
+            else:
+                filename = self.get_filename(media_url)
+                if not self.have_file_extension(filename):
+                    filename = filename + "." + self.guess_file_extension(content)
+
+                self.save_to(content, output_directory, filename)
+
+    async def get_media_urls(self, webpage_url: UrlLike) -> Iterable[UrlLike]:
         return self.get_media_urls_from_embed_json(
             await self.fetch_tweet_embed(webpage_url)
         )
@@ -87,6 +108,10 @@ class Twitter(Extractor):
             res.raise_for_status()
             return await res.json()
 
+    @staticmethod
+    def get_filename(source_url: UrlLike):
+        return urlparse(source_url).path.rsplit("/", 1)[-1]
+
 
 if __name__ == "__main__":
     import asyncio
@@ -94,6 +119,6 @@ if __name__ == "__main__":
 
     async def main():
         async with Twitter() as twitter:
-            await twitter.save(link, "./twitter_media")
+            await twitter.save(link)
 
     asyncio.run(main())
