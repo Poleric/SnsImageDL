@@ -2,8 +2,6 @@ import asyncio
 import os
 import re
 import functools
-from typing import Iterable
-
 from pixivpy3 import AppPixivAPI
 from pixivpy3.utils import PixivError
 from extractor.base import Extractor, UrlLike, PathLike
@@ -31,10 +29,6 @@ class Pixiv(Extractor):
         assert self.REFRESH_TOKEN, "PIXIV_REFRESH_TOKEN is required. Refer to https://gist.github.com/ZipFile/c9ebedb224406f4f11845ab700124362 to get your refresh token and add it into the environment variable with the name PIXIV_REFRESH_TOKEN"
 
     # @override
-    def __str__(self):
-        return "Pixiv"
-
-    # @override
     async def __aenter__(self):
         self.session = await self.loop.run_in_executor(
             None,
@@ -48,20 +42,18 @@ class Pixiv(Extractor):
         return
 
     # @override
-    def get_filename(self, source_url: UrlLike):
-        return
+    def __str__(self):
+        return "Pixiv"
 
     # @override
-    async def retrieve_media_urls(self, webpage_url: UrlLike) -> Iterable[str]:
-        return self.get_pixiv_media_urls(
-            await self.get_pixiv_illust(webpage_url)
-        )
+    async def save(self, webpage_url: UrlLike, output_directory: PathLike = "./pixiv_media", filename: str = None) -> None:
+        media_urls = await self.get_media_urls(webpage_url)
 
-    # @override
-    async def save(self, webpage_url: UrlLike, output_directory: PathLike) -> None:
+        if not media_urls:
+            raise MediaNotFound
+
         os.makedirs(output_directory, exist_ok=True)
-
-        for media_url in await self.retrieve_media_urls(webpage_url):
+        for media_url in media_urls:
             try:
                 self.loop.run_in_executor(
                     None,
@@ -73,6 +65,11 @@ class Pixiv(Extractor):
                 )
             except PixivError:
                 self.logger.exception(f"Download {media_url} failed.")
+
+    async def get_media_urls(self, webpage_url: UrlLike) -> list[str]:
+        return self.get_pixiv_media_urls(
+            await self.get_pixiv_illust(webpage_url)
+        )
 
     def get_pixiv_id(self, webpage_url: UrlLike) -> str:
         res = re.search(self.SITE_REGEX, webpage_url)
