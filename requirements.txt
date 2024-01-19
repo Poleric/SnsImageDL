@@ -1,7 +1,13 @@
-pixivpy3
 discord.py
-requests
-BeautifulSoup4
-lxml
-filetype
+
+# general scraping
 aiohttp[speedups]
+filetype
+
+# scrape dcinside
+beautifulsoup4
+lxml
+
+# scrape pixiv
+pixivpy3
+requests
