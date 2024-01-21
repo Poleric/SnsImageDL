@@ -1,5 +1,7 @@
 import re
+import math
 import os
+import json
 import aiohttp
 from urllib.parse import urlparse
 from extractor.base import Extractor, UrlLike, PathLike
@@ -75,21 +77,18 @@ class Twitter(Extractor):
             raise NotTwitterLink(f"{webpage_url} is not a Twitter link.")
         return res[1]
 
-    @staticmethod
-    def get_media_urls_from_embed_json(data: dict) -> Iterable[UrlLike]:
-        has_media = False
-
-        # a media can have both images and videos
-        if data.get("photos"):
-            has_media = True
-            yield from (f'{photo["url"]}?name=large' for photo in data["photos"])
-
-        if data.get("video"):
-            has_media = True
-            yield from (video["src"] for video in data["video"]["variants"])
-
-        if not has_media:
-            raise MediaNotFound
+    def get_media_urls_from_embed_json(self, tweet_embed: dict) -> Iterable[UrlLike]:
+        for media_details in tweet_embed["mediaDetails"]:
+            match media_details:
+                case {"type": "photo"}:
+                    yield self.get_best_quality_image_link(media_details)
+                case {"type": "video"}:
+                    yield media_details["video_info"]["variants"][-1]["url"]  # usually best quality
+                case {"type": unknown}:
+                    self.logger.warning(
+                        f"Media type {unknown} is not supported.\n"
+                        f"Data dump: {json.dumps(media_details, indent=4)}"
+                    )
 
     async def fetch_tweet_embed(self, webpage_url: UrlLike) -> dict:
         """Read tweets data. Returns a json dictionary with tweet attachment data."""
@@ -107,6 +106,27 @@ class Twitter(Extractor):
         ) as res:
             res.raise_for_status()
             return await res.json()
+
+    @staticmethod
+    def get_best_quality_image_link(image_details: dict) -> UrlLike:
+        # twitter have weird way they keep images and in the json.
+        # they store a base url of, for eg, https://pbs.twimg.com/media/<image_thing>.jpg
+        # sometimes giving the args of ?name=large will give the best quality,
+        # but if it is bigger than 2048 x 2048 (from small testing), ?name=large will not give the best quality
+        # instead ?name=4096x4096 will yield the best quality
+        # PS: currently testing if it's a best fit of pow of 2
+
+        def get_next_pow_2(n: int) -> int:
+            return 2 ** math.ceil(math.log2(n))
+
+        large_w, large_h = image_details["sizes"]["large"]["w"], image_details["sizes"]["large"]["h"]
+        original_w, original_h = image_details["original_info"]["width"], image_details["original_info"]["height"]
+
+        if large_w > original_w and large_h > original_h:
+            return f"{image_details['media_url_https']}?name=large"
+        else:
+            max_resolution = max(get_next_pow_2(original_w), get_next_pow_2(original_h))
+            return f"{image_details['media_url_https']}?name={max_resolution}x{max_resolution}"
 
     @staticmethod
     def get_filename(source_url: UrlLike):
