@@ -1,3 +1,4 @@
+attrs
 discord.py
 
 # general scraping
@@ -11,3 +12,6 @@ lxml
 # scrape pixiv
 pixivpy3
 requests
+
+# image metadata embedding
+pyexiv2
