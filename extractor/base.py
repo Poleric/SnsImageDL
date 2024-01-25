@@ -1,10 +1,7 @@
 import aiohttp
-import logging
-import filetype
 import os
 import re
-from pathlib import Path
-from extractor.exceptions import MediaNotFound, SessionNotCreated
+from extractor.media import Media
 
 from abc import ABC, abstractmethod
 from typing import Iterable
@@ -14,10 +11,9 @@ UrlLike = str
 
 
 class Extractor(ABC):
-    SITE_REGEX: str
+    URL_REGEX: str
 
     def __init__(self):
-        self.logger = logging.getLogger(__name__)
         self.session: aiohttp.ClientSession | None = None
 
     async def __aenter__(self):
@@ -27,42 +23,25 @@ class Extractor(ABC):
     async def __aexit__(self, exc_type, exc_val, exc_tb):
         await self.session.close()
 
+    def __str__(self):
+        return self.__class__.__name__
+
     @classmethod
     def check_link(cls, webpage_url: UrlLike) -> bool:
-        return bool(re.match(cls.SITE_REGEX, webpage_url))
+        return bool(re.match(cls.URL_REGEX, webpage_url))
+
+    @staticmethod
+    def get_url_basename(source_url: UrlLike) -> str:
+        return os.path.basename(source_url).split("?")[0]
 
     @abstractmethod
-    def __str__(self):
-        raise NotImplemented
-
-    @abstractmethod
-    async def save(self, webpage_url: UrlLike, output_directory: PathLike, filename: str = None) -> None:
-        """Save all the medias in the specified webpage url.
-
-        :param webpage_url: The webpage to save medias.
-        :type webpage_url: str
-
-        :param output_directory: The output directory to save the medias to.
-        :type output_directory: PathLike
-
-        :param filename: The filename to save as.
-        :type filename: str | None
+    async def get_all_media(self, webpage_url: UrlLike) -> Iterable[Media]:
         """
-        raise NotImplemented
+        :param webpage_url: The webpage to fetch its media from.
+        :type webpage_url: UrlLike
 
-    # utils
-    @staticmethod
-    def save_to(bytes: bytes, output_directory: PathLike, filename: str) -> None:
-        path = Path(output_directory, filename)
-        with path.open("wb") as f:
-            f.write(bytes)
+        :return:
+        :rtype: Iterable[Media]
+        """
+        raise NotImplementedError
 
-    @staticmethod
-    def guess_file_extension(bytes: bytes) -> str | None:
-        guess = filetype.guess_extension(bytes)
-        if guess:
-            return guess.extension
-
-    @staticmethod
-    def have_file_extension(filename: str) -> bool:
-        return len(filename.split(".")) > 1
