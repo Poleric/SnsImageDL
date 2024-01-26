@@ -1,9 +1,10 @@
 import re
 import math
 import logging
+import json
 from extractor.base import Extractor, UrlLike
 from extractor.exceptions import MediaNotFound, InvalidLink
-from extractor.json_annotate import TwitterEmbedDetails, TwitterMediaDetails, TwitterMediaDetailsVideo
+from extractor.json_annotate import TwitterEmbedDetails, TwitterMediaDetails, TwitterMediaDetailsVideo, TwitterTombstone
 from extractor.tags import Tag
 
 from typing import Iterable, override
@@ -23,7 +24,7 @@ def get_source_url_from_media_details(media_details: TwitterMediaDetails | Twitt
     match media_details:
         case {"type": "photo"}:
             return get_best_quality_image_link(media_details)
-        case {"type": "video"}:
+        case {"type": "video" | "animated_gif"}:
             return media_details["video_info"]["variants"][-1]["url"]  # usually best quality
         case {"type": unknown}:
             logging.debug(
@@ -75,6 +76,11 @@ class Twitter(Extractor):
     async def get_all_media(self, webpage_url: UrlLike) -> Iterable[Media]:
         tweet_embed = await self.fetch_tweet(webpage_url)
 
+        if tweet_embed["__typename"] == "TweetTombstone":
+            tweet_embed: TwitterTombstone
+            raise TweetDeleted(tweet_embed["tombstone"]["text"]["text"])
+
+        tweet_embed: TwitterEmbedDetails
         for media_details in tweet_embed["mediaDetails"]:
             source_url = get_source_url_from_media_details(media_details)
             tag: Tag = {
@@ -105,7 +111,7 @@ class Twitter(Extractor):
             raise NotTwitterLink(f"{webpage_url} is not a Twitter link.")
         return res[1]
 
-    async def fetch_tweet(self, webpage_url: UrlLike) -> TwitterEmbedDetails:
+    async def fetch_tweet(self, webpage_url: UrlLike) -> TwitterEmbedDetails | TwitterTombstone:
         """Read tweets data. Returns a json dictionary with tweet attachment data."""
         # isolate id from url
         tweet_id = self.get_tweet_id(webpage_url)
@@ -126,7 +132,6 @@ class Twitter(Extractor):
 if __name__ == "__main__":
     import asyncio
     import os
-    import json
     single_2480_3750 = "https://twitter.com/hagoonha/status/1696463808259342624"
     jp_in_username = "https://twitter.com/AZchangaa/status/1748347428242342294"
     single_video = "https://twitter.com/anzerusu/status/1748269067155165480"
@@ -136,7 +141,8 @@ if __name__ == "__main__":
     async def main():
         async with Twitter() as twitter:
             os.makedirs("./twitter_media", exist_ok=True)
-            async for media in twitter.get_all_media(single_1321_1045):
+            async for media in twitter.get_all_media("https://twitter.com/NKNK_NGRMS/status/1741474753498497459"):
                 media.save(output_directory="./twitter_media", add_metadata=True)
+            # print(json.dumps(await twitter.fetch_tweet("https://twitter.com/NKNK_NGRMS/status/1741474753498497459"), indent=4))
 
     asyncio.run(main())
