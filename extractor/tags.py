@@ -75,7 +75,7 @@ def add_exif(data: bytes, tag: Tag, *, extension: str = None) -> bytes:
             "Exif.Image.XPComment": tag.get("description"),
             "Exif.Image.XPAuthor": tag.get("artist").get("display_name"),
             "Exif.Image.XPKeywords": ";".join(tag.get("keywords")),
-            "Exif.Image.XPSubjects": ";".join(tag.get("keywords")),
+            "Exif.Image.XPSubject": ";".join(tag.get("keywords")),
             "Exif.Photo.UserComment": tag.get("description"),
             "Exif.Photo.DateTimeOriginal": tag.get("created_at")
         }
