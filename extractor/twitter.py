@@ -32,7 +32,7 @@ def get_source_url_from_media_details(media_details: TwitterMediaDetails | Twitt
             )
 
 
-def get_best_quality_image_link(image_details: dict) -> UrlLike:
+def get_best_quality_image_link(image_details: TwitterMediaDetails) -> UrlLike:
     # twitter have weird way they keep images and in the json.
     # they store a base url of, for eg, https://pbs.twimg.com/media/<image_thing>.jpg
     # sometimes giving the args of ?name=large will give the best quality,
@@ -46,7 +46,7 @@ def get_best_quality_image_link(image_details: dict) -> UrlLike:
     large_w, large_h = image_details["sizes"]["large"]["w"], image_details["sizes"]["large"]["h"]
     original_w, original_h = image_details["original_info"]["width"], image_details["original_info"]["height"]
 
-    if large_w > original_w and large_h > original_h:
+    if large_w >= original_w and large_h >= original_h:
         return f"{image_details['media_url_https']}?name=large"
     else:
         max_resolution = max(get_next_pow_2(original_w), get_next_pow_2(original_h))
@@ -131,11 +131,12 @@ if __name__ == "__main__":
     jp_in_username = "https://twitter.com/AZchangaa/status/1748347428242342294"
     single_video = "https://twitter.com/anzerusu/status/1748269067155165480"
     single_2220_3118 = "https://twitter.com/UshakuChen/status/1748325819498553463"
+    single_1321_1045 = "https://twitter.com/hrn_ohana/status/1750496540547010566"
 
     async def main():
         async with Twitter() as twitter:
-            os.makedirs("./twitter_media")
-            async for media in twitter.get_all_media(single_2480_3750):
+            os.makedirs("./twitter_media", exist_ok=True)
+            async for media in twitter.get_all_media(single_1321_1045):
                 media.save(output_directory="./twitter_media", add_metadata=True)
 
     asyncio.run(main())
