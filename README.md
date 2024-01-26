@@ -1,13 +1,30 @@
-# DiscordMediaAutoDownloader
-I'm too lazy to click "Save image as..."
+Media Downloader Bot
+====================
 
-Automatically downloads any medias from supported links when sent in a Discord channel. 
+<sub>I'm too lazy to click "Save image as..."</sub>
 
-## Supported Sites
+A bot to automatically download images and videos from links containing them. \
+... and add metadata while at it.
+
+Currently only supports a few [sites](#supported-sites), but working on supporting more.
+
+Features
+--------
+
+- Automatically download from links sent in Discord.
+- Downloads highest resolution images from sites.
+- Add metadata to images with [exif](https://en.wikipedia.org/wiki/Exif) and [xmp](https://en.wikipedia.org/wiki/Extensible_Metadata_Platform).
+
+Supported Sites
+---------------
 
 - Twitter
 - Pixiv
 - dcinside
 
-## TODO
-- Support Reddit.
+Requirements
+------------
+
+- Python 3.12 or above
+
+
