@@ -3,6 +3,7 @@ from extractor.base import Extractor
 from extractor.twitter import Twitter
 from extractor.pixiv import Pixiv
 from extractor.dcinside import Dcinside
+from extractor.media import Media
 
 from typing import Type
 
@@ -33,7 +34,8 @@ async def save_media(query: str) -> None:
     for extractor in extractors:
         if extractor.check_link(query):
             async with extractor() as source:
-                await source.save(query)
+                async for media in source.get_all_media(query):
+                    media.save(f"./saved_media/{source.__class__.__name__.casefold()}_media/")
             return
 
     raise NotValidQuery("The specified query type is not supported.")

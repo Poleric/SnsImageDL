@@ -21,6 +21,8 @@ if not BOT_TOKEN:
 
 URL_REGEX = r"https?:\/\/(www\.)?[-a-zA-Z0-9@:%._\+~#=]{2,256}\.[a-z]{2,4}\b([-a-zA-Z0-9@:%_\+.~#?&//=]*)"
 discord.utils.setup_logging()
+logger = logging.getLogger(__name__)
+logger.setLevel(logging.DEBUG)
 bot = commands.Bot(
     command_prefix=".",
     activity=CustomActivity("Watching~"),
@@ -37,16 +39,17 @@ async def on_message(msg: Message):
         return
 
     url = re.search(URL_REGEX, msg.content)  # might be a url
+    logger.debug(f"Url found. Attempting to save {url = }")
     if url:
         url = url[0]
         try:
             await save_media(url)
         except NotValidQuery:
-            logging.exception(f"{url=} is not supported.")
+            logger.exception(f"{url=} is not supported.")
         except MediaNotFound:
-            logging.exception(f"Media is not found in {url}.")
+            logger.exception(f"Media is not found in {url}.")
         except ScrapingException:
-            logging.exception(f"Error encountered when saving {url}")
+            logger.exception(f"Error encountered when saving {url}")
         else:  # no errors
             await msg.add_reaction("✅")
 
@@ -54,6 +57,7 @@ async def on_message(msg: Message):
 @bot.command()
 async def save(ctx: Context, msg: Message):
     url = re.search(URL_REGEX, msg.content)[0]
+    logger.debug(f"Save command invoked: Saving {url = }")
 
     try:
         await save_media(url)
