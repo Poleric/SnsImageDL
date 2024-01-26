@@ -11,7 +11,7 @@ from typing import Type
 extractors: tuple[Type[Extractor], ...] = (
     Twitter,
     Pixiv,
-    Twitter
+    Dcinside
 )
 
 
