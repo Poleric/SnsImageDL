@@ -19,7 +19,7 @@ if not BOT_TOKEN:
     sys.exit(1)
 
 
-URL_REGEX = r"https?:\/\/(www\.)?[-a-zA-Z0-9@:%._\+~#=]{2,256}\.[a-z]{2,4}\b([-a-zA-Z0-9@:%_\+.~#?&//=]*)"
+URL_REGEX = r"https?:\/\/(?:www\.)?[-a-zA-Z0-9@:%._\+~#=]{2,256}\.[a-z]{2,4}\b(?:[-a-zA-Z0-9@:%_\+.~#?&//=]*)"
 discord.utils.setup_logging()
 logger = logging.getLogger(__name__)
 logger.setLevel(logging.DEBUG)
@@ -38,10 +38,9 @@ async def on_message(msg: Message):
     if ctx.valid:
         return
 
-    url = re.search(URL_REGEX, msg.content)  # might be a url
-    logger.debug(f"Url found. Attempting to save {url = }")
-    if url:
-        url = url[0]
+    urls = re.findall(URL_REGEX, msg.content)  # might be a url
+    for url in urls:
+        logger.debug(f"Url found. Attempting to save {url = }")
         try:
             await save_media(url)
         except NotValidQuery:
@@ -56,26 +55,26 @@ async def on_message(msg: Message):
 
 @bot.command()
 async def save(ctx: Context, msg: Message):
-    url = re.search(URL_REGEX, msg.content)[0]
-    logger.debug(f"Save command invoked: Saving {url = }")
-
-    try:
-        await save_media(url)
-    except NotValidQuery:
-        logging.exception(f"{url=} is not supported.")
-        await ctx.reply(f"Saving {url} is not supported yet.")
-        await msg.add_reaction("❓")
-    except MediaNotFound:
-        logging.exception(f"Media is not found in {url}.")
-        await ctx.reply(f"No media is found for the url {url}")
-        await msg.add_reaction("❌")
-    except ScrapingException:  # so far should not be ran since theres no ScrapingException raises
-        logging.exception(f"Error encountered when saving {url}")
-        await ctx.reply(f"Error encountered when saving url {url}")
-        await msg.add_reaction("❌")
-    else:  # no errors
-        await ctx.message.add_reaction("✅")
-        await msg.add_reaction("✅")
+    urls = re.findall(URL_REGEX, msg.content)
+    for url in urls:
+        logger.debug(f"Save command invoked: Saving {url = }")
+        try:
+            await save_media(url)
+        except NotValidQuery:
+            logging.exception(f"{url=} is not supported.")
+            await ctx.reply(f"Saving {url} is not supported yet.")
+            await msg.add_reaction("❓")
+        except MediaNotFound:
+            logging.exception(f"Media is not found in {url}.")
+            await ctx.reply(f"No media is found for the url {url}")
+            await msg.add_reaction("❌")
+        except ScrapingException:  # so far should not be ran since theres no ScrapingException raises
+            logging.exception(f"Error encountered when saving {url}")
+            await ctx.reply(f"Error encountered when saving url {url}")
+            await msg.add_reaction("❌")
+        else:  # no errors
+            await ctx.message.add_reaction("✅")
+            await msg.add_reaction("✅")
 
 
 async def main():
