@@ -1,17 +1,16 @@
-attrs
-discord.py
+attrs>=23.2.0
+discord.py>=2.3.2
 
 # general scraping
-aiohttp[speedups]
-filetype
+aiohttp[speedups]>=3.9.1
+filetype>=1.2.0
 
 # scrape dcinside
-beautifulsoup4
-lxml
+beautifulsoup4>=4.12.3
+lxml>=5.1.0
 
 # scrape pixiv
-pixivpy3
-requests
+pixivpy3>=3.7.4
 
 # image metadata embedding
-pyexiv2
+pyexiv2>=2.11.0
