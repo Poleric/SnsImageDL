@@ -158,7 +158,7 @@ class TwitterVideoInfo(TypedDict):
 
 class TwitterMediaDetailsVideo(TwitterMediaDetails):
     additional_media_info: dict
-    type: Literal["video"]
+    type: Literal["video", "animated_gif"]
     video_info: TwitterVideoInfo
 
 
@@ -198,8 +198,35 @@ class TwitterVideoDetails(TypedDict):
     viewCount: int
 
 
+class TwitterTombstoneEntitiesRef(TypedDict):
+    __typename: str
+    url: UrlLike
+    url_type: str
+
+
+class TwitterTombstoneEntities(TypedDict):
+    from_index: int
+    to_index: int
+    ref: TwitterTombstoneEntitiesRef
+
+
+class TwitterTombstoneDetailsDetails(TypedDict):
+    text: str  # reason
+    entities: Sequence
+    rtl: bool
+
+
+class TwitterTombstoneDetails(TypedDict):
+    text: TwitterTombstoneDetailsDetails
+
+
+class TwitterTombstone(TypedDict):
+    __typename: Literal["TweetTombstone"]
+    tombstone: TwitterTombstoneDetails
+
+
 class TwitterEmbedDetails(TypedDict):
-    __typename: Literal["Tweet", "TweetTombstone"]
+    __typename: Literal["Tweet"]
     lang: str
     favorite_count: int
     possibly_sensitive: bool
