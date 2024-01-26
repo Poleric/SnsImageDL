@@ -1,28 +1,30 @@
-import os
 
-import discord
+
 from discord import CustomActivity, Intents, Message
 from discord.ext import commands
 from discord.ext.commands import Context
-import logging
-import sys
+
 import re
 
 from extractor import save_media, NotValidQuery
 from extractor.exceptions import ScrapingException, MediaNotFound
 
+import os
+import sys
+from setup_logging import setup_logger
+
+logger = setup_logger()
 
 BOT_TOKEN = os.getenv("DISCORD_BOT_TOKEN")
 if not BOT_TOKEN:
-    logging.exception("DISCORD_BOT_TOKEN is required. "
-                      "Set the bot token as an environment variable with the key `DISCORD_BOT_TOKEN`")
+    logger.exception(
+        "DISCORD_BOT_TOKEN is required. \n"
+        "Set the bot token as an environment variable with the key `DISCORD_BOT_TOKEN`")
     sys.exit(1)
 
 
 URL_REGEX = r"https?:\/\/(?:www\.)?[-a-zA-Z0-9@:%._\+~#=]{2,256}\.[a-z]{2,4}\b(?:[-a-zA-Z0-9@:%_\+.~#?&//=]*)"
-discord.utils.setup_logging()
-logger = logging.getLogger(__name__)
-logger.setLevel(logging.DEBUG)
+
 bot = commands.Bot(
     command_prefix=".",
     activity=CustomActivity("Watching~"),
