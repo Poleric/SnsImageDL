@@ -12,12 +12,16 @@ def setup_logger(*, log_directory: str = "./logs/"):
     logger = logging.getLogger("root")
     logger.setLevel(logging.DEBUG)
 
+    discord_stream_handler = logger.handlers[0]
+    discord_stream_handler.setLevel(logging.INFO)
+
     file_handler = TimedRotatingFileHandler(
         filename="./logs/bot.log",
         when="midnight",
         backupCount=7,
         encoding="utf-8"
     )
+    file_handler.setLevel(logging.DEBUG)
     file_handler.setFormatter(
         logging.Formatter('[{asctime}] [{levelname:<8}] {name}: {message}', "%Y-%m-%d %H:%M:%S", style='{')
     )
