@@ -294,3 +294,5 @@ pyrightconfig.json
 *.png
 *.gif
 *.mp4
+*.json
+*.log
