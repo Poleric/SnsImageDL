@@ -111,8 +111,12 @@ class Twitter(Extractor):
             raise NotTwitterLink(f"{webpage_url} is not a Twitter link.")
         return res[1]
 
-    async def fetch_tweet(self, webpage_url: UrlLike) -> TwitterEmbedDetails | TwitterTombstone:
-        """Read tweets data. Returns a json dictionary with tweet attachment data."""
+    async def fetch_tweet(self, webpage_url: UrlLike, auth_token: str ="") -> TwitterEmbedDetails | TwitterTombstone:
+        """Read tweets data. Returns a json dictionary with tweet attachment data.
+
+        :param webpage_url: any support tweet url. Includes its derivatives like fxtwitter, vxtwitter,...
+        :param auth_token: the auth_token cookie on Twitter. Used for scraping age restricted content.
+        """
         # isolate id from url
         tweet_id = self.get_tweet_id(webpage_url)
         params = {
@@ -120,10 +124,14 @@ class Twitter(Extractor):
             "lang": "en",
             "token": 0
         }
+        cookies = {
+            "auth_token": auth_token
+        }
         async with self.session.get(
             "https://cdn.syndication.twimg.com/tweet-result",
             headers=self.HEADERS,
-            params=params
+            params=params,
+            cookies=cookies
         ) as res:
             res.raise_for_status()
             return await res.json()
