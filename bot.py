@@ -6,8 +6,8 @@ from discord.ext.commands import Context
 
 import re
 
-from extractor import save_media, NotValidQuery
-from extractor.exceptions import ScrapingException, MediaNotFound
+from media_downloader import save_media, NotValidQuery
+from media_downloader.exceptions import ScrapingException, MediaNotFound
 
 import os
 import sys
