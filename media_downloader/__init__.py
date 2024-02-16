@@ -1,7 +1,7 @@
 from .exceptions import ExtractorError
 from .base import Extractor
 from .twitter import Twitter
-from media_downloader.pixiv.pixiv import Pixiv
+from .pixiv import Pixiv
 from .dcinside import Dcinside
 from .media import Media
 
