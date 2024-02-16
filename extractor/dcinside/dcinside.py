@@ -121,7 +121,6 @@ class Dcinside(Extractor):
         return res[1], res[2]
 
 
-
 if __name__ == "__main__":
     import asyncio
     import os
