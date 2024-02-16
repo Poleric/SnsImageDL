@@ -1,5 +1,5 @@
 from .exceptions import ExtractorError
-from .base import Extractor
+from .extractor import Extractor
 from .twitter import Twitter
 from .pixiv import Pixiv
 from .dcinside import Dcinside

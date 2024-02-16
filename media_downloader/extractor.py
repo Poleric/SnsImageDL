@@ -6,8 +6,8 @@ from .media import Media
 from abc import ABC, abstractmethod
 from typing import Iterable
 
-PathLike = str | bytes | os.PathLike
-UrlLike = str
+type PathLike = str | bytes | os.PathLike
+type UrlLike = str
 
 
 class Extractor(ABC):

@@ -2,7 +2,7 @@ import re
 import math
 import logging
 import json
-from ..base import Extractor, UrlLike
+from ..extractor import Extractor, UrlLike
 from ..exceptions import MediaNotFound, InvalidLink
 from ..tags import Tag
 from ..media import Media

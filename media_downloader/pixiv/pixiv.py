@@ -7,7 +7,7 @@ from io import BytesIO
 import json
 from pixivpy3 import AppPixivAPI
 from pixivpy3.utils import PixivError
-from ..base import Extractor, UrlLike
+from ..extractor import Extractor, UrlLike
 from ..exceptions import MediaNotFound, InvalidLink
 from ..media import Media
 from ..tags import Tag

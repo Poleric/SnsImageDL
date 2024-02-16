@@ -2,7 +2,7 @@ import re
 import logging
 import aiohttp
 from bs4 import BeautifulSoup
-from ..base import Extractor, UrlLike
+from ..extractor import Extractor, UrlLike
 from ..exceptions import InvalidLink
 from ..tags import Tag
 from ..media import Media
