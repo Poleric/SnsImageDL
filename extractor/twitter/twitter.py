@@ -4,7 +4,7 @@ import logging
 import json
 from extractor.base import Extractor, UrlLike
 from extractor.exceptions import MediaNotFound, InvalidLink
-from extractor.json_annotate import TwitterEmbedDetails, TwitterMediaDetails, TwitterMediaDetailsVideo, TwitterTombstone
+from .response_typing import TwitterEmbedDetails, TwitterMediaDetails, TwitterMediaDetailsVideo, TwitterTombstone
 from extractor.tags import Tag
 
 from typing import Iterable, override
