@@ -4,10 +4,13 @@ import logging
 import json
 from extractor.base import Extractor, UrlLike
 from extractor.exceptions import MediaNotFound, InvalidLink
-from .response_typing import TwitterEmbedDetails, TwitterMediaDetails, TwitterMediaDetailsVideo, TwitterTombstone
 from extractor.tags import Tag
 
 from typing import Iterable, override
+from .response_typing import BadRequestResponse, AgeRestrictedResponse, TweetDeletedResponse, TweetResponse
+type TweetTombstone = AgeRestrictedResponse | TweetDeletedResponse
+type TwitterResponse = BadRequestResponse | TweetTombstone | TweetResponse
+
 
 from extractor.media import Media
 
@@ -20,20 +23,24 @@ class TweetDeleted(MediaNotFound):
     pass
 
 
-def get_source_url_from_media_details(media_details: TwitterMediaDetails | TwitterMediaDetailsVideo) -> UrlLike:
-    match media_details:
+class AgeRestricted(MediaNotFound):
+    pass
+
+
+def get_source_url_from_media_details(media_detail: TweetResponse.MediaDetail) -> UrlLike:
+    match media_detail:
         case {"type": "photo"}:
-            return get_best_quality_image_link(media_details)
+            return get_best_quality_image_link(media_detail)
         case {"type": "video" | "animated_gif"}:
-            return media_details["video_info"]["variants"][-1]["url"]  # usually best quality
+            return media_detail["video_info"]["variants"][-1]["url"]  # usually best quality
         case {"type": unknown}:
             logging.debug(
                 f"Unexpected type {unknown}.\n"
-                f"Full dump: {json.dumps(media_details, indent=4)}"
+                f"Full dump: {json.dumps(media_detail, indent=4)}"
             )
 
 
-def get_best_quality_image_link(image_details: TwitterMediaDetails) -> UrlLike:
+def get_best_quality_image_link(image_details: TweetResponse.MediaDetail) -> UrlLike:
     # twitter have weird way they keep images and in the json.
     # they store a base url of, for eg, https://pbs.twimg.com/media/<image_thing>.jpg
     # sometimes giving the args of ?name=large will give the best quality,
@@ -77,10 +84,17 @@ class Twitter(Extractor):
         tweet_embed = await self.fetch_tweet(webpage_url)
 
         if tweet_embed["__typename"] == "TweetTombstone":
-            tweet_embed: TwitterTombstone
-            raise TweetDeleted(tweet_embed["tombstone"]["text"]["text"])
+            tweet_embed: TweetTombstone
+            reason = tweet_embed["tombstone"]["text"]["text"]
 
-        tweet_embed: TwitterEmbedDetails
+            if reason.startswith("Age-restricted adult content"):
+                raise AgeRestricted(reason)
+            elif reason.startswith("This Post was deleted"):
+                raise TweetDeleted(reason)
+            else:
+                raise MediaNotFound(reason)
+
+        tweet_embed: TweetResponse
         for media_details in tweet_embed["mediaDetails"]:
             source_url = get_source_url_from_media_details(media_details)
             tag: Tag = {
@@ -111,7 +125,7 @@ class Twitter(Extractor):
             raise NotTwitterLink(f"{webpage_url} is not a Twitter link.")
         return res[1]
 
-    async def fetch_tweet(self, webpage_url: UrlLike, auth_token: str ="") -> TwitterEmbedDetails | TwitterTombstone:
+    async def fetch_tweet(self, webpage_url: UrlLike, auth_token: str = "") -> TwitterResponse:
         """Read tweets data. Returns a json dictionary with tweet attachment data.
 
         :param webpage_url: any support tweet url. Includes its derivatives like fxtwitter, vxtwitter,...
@@ -124,17 +138,26 @@ class Twitter(Extractor):
             "lang": "en",
             "token": 0
         }
-        cookies = {
-            "auth_token": auth_token
-        }
-        async with self.session.get(
-            "https://cdn.syndication.twimg.com/tweet-result",
-            headers=self.HEADERS,
-            params=params,
-            cookies=cookies
-        ) as res:
-            res.raise_for_status()
-            return await res.json()
+        try:
+            async with self.session.get(
+                "https://cdn.syndication.twimg.com/tweet-result",
+                headers=self.HEADERS,
+                params=params
+            ) as res:
+                res.raise_for_status()
+                return await res.json()
+        except AgeRestricted:
+            cookies = {
+                "auth_token": auth_token
+            }
+            async with self.session.get(
+                "https://cdn.syndication.twimg.com/tweet-result",
+                headers=self.HEADERS,
+                params=params,
+                cookies=cookies
+            ) as res:
+                res.raise_for_status()
+                return await res.json()
 
 
 if __name__ == "__main__":
