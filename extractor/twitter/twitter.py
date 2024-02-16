@@ -2,9 +2,10 @@ import re
 import math
 import logging
 import json
-from extractor.base import Extractor, UrlLike
-from extractor.exceptions import MediaNotFound, InvalidLink
-from extractor.tags import Tag
+from ..base import Extractor, UrlLike
+from ..exceptions import MediaNotFound, InvalidLink
+from ..tags import Tag
+from ..media import Media
 
 from typing import Iterable, override
 from .response_typing import BadRequestResponse, AgeRestrictedResponse, TweetDeletedResponse, TweetResponse
@@ -12,7 +13,6 @@ type TweetTombstone = AgeRestrictedResponse | TweetDeletedResponse
 type TwitterResponse = BadRequestResponse | TweetTombstone | TweetResponse
 
 
-from extractor.media import Media
 
 
 class NotTwitterLink(InvalidLink):

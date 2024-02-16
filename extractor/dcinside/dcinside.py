@@ -2,13 +2,13 @@ import re
 import logging
 import aiohttp
 from bs4 import BeautifulSoup
-from extractor.base import Extractor, UrlLike
-from extractor.exceptions import InvalidLink
-from extractor.tags import Tag
+from ..base import Extractor, UrlLike
+from ..exceptions import InvalidLink
+from ..tags import Tag
+from ..media import Media
 
 from typing import Iterable, override
 
-from extractor.media import Media
 
 
 class NotDcinsideLink(InvalidLink):

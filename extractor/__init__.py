@@ -1,9 +1,9 @@
-from extractor.exceptions import ExtractorError
-from extractor.base import Extractor
-from extractor.twitter import Twitter
-from extractor.pixiv import Pixiv
-from extractor.dcinside import Dcinside
-from extractor.media import Media
+from .exceptions import ExtractorError
+from .base import Extractor
+from .twitter import Twitter
+from .pixiv import Pixiv
+from .dcinside import Dcinside
+from .media import Media
 
 from typing import Type
 

@@ -3,8 +3,7 @@ import os
 from attrs import define
 from pathlib import Path
 import filetype
-from .tags import Tag, \
-    add_xmp, add_exif, add_jpeg_comment
+from .tags import Tag, add_xmp, add_exif, add_jpeg_comment
 
 from os import PathLike
 type PathLike = str | bytes | PathLike

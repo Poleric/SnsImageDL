@@ -1,7 +1,7 @@
 import aiohttp
 import os
 import re
-from extractor.media import Media
+from .media import Media
 
 from abc import ABC, abstractmethod
 from typing import Iterable
