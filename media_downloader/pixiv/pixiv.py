@@ -13,13 +13,14 @@ from ..media import Media
 from ..tags import Tag
 
 from typing import override, Iterable
+from .response_typing import IllustDetails
 
 
 class NotPixivLink(InvalidLink):
     pass
 
 
-def get_pixiv_media_urls(illust_details: PixivIllustDetails) -> Iterable[UrlLike]:
+def get_pixiv_media_urls(illust_details: IllustDetails) -> Iterable[UrlLike]:
     match illust_details:
         case {
             "type": "illust",
@@ -120,7 +121,7 @@ class Pixiv(Extractor):
             raise NotPixivLink
         return res[1]
 
-    async def fetch_illust(self, webpage_url: UrlLike) -> PixivIllustDetails:
+    async def fetch_illust(self, webpage_url: UrlLike) -> IllustDetails:
         illust_id = self.get_pixiv_id(webpage_url)
 
         for i in range(3):
