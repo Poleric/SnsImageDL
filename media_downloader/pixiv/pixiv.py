@@ -7,11 +7,10 @@ from io import BytesIO
 import json
 from pixivpy3 import AppPixivAPI
 from pixivpy3.utils import PixivError
-from .base import Extractor, UrlLike
-from .exceptions import MediaNotFound, InvalidLink
-from .response_typing import PixivIllustDetails
-from .media import Media
-from .tags import Tag
+from ..base import Extractor, UrlLike
+from ..exceptions import MediaNotFound, InvalidLink
+from ..media import Media
+from ..tags import Tag
 
 from typing import override, Iterable
 
