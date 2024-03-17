@@ -51,7 +51,7 @@ def get_pixiv_media_urls(illust_details: IllustDetails) -> Iterable[UrlLike]:
 
 
 class Pixiv(Extractor):
-    URL_REGEX = r"https://www.p.?ixiv.net/.*artworks/([0-9]+)"
+    URL_REGEX = r"https://.*p.?ixiv.net/.*artworks/([0-9]+)"
     API_ARGS = {
         "timeout": 3
     }
