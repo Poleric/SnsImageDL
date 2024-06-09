@@ -54,6 +54,11 @@ async def on_message(msg: Message):
             await msg.add_reaction("✅")
 
 
+@bot.listen()
+async def on_ready():
+    logging.info(f"Bot ready. Logged in as: {bot.user.name}")
+
+
 @bot.command()
 async def save(ctx: Context, msg: Message):
     urls = re.findall(URL_REGEX, msg.content)
