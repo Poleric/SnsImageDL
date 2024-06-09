@@ -1,1 +1,1 @@
-from pixiv import Pixiv
+from .pixiv import Pixiv
