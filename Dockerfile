@@ -1,4 +1,14 @@
-FROM python:3.12-slim
+FROM python:3.12
+
+WORKDIR /
+
+ARG TARGETARCH
+
+COPY ./build_pyexiv2_on_arm.sh .
+
+RUN if [ $TARGETARCH = "arm64" ]; then \
+      ./build_pyexiv2_on_arm.sh \
+    ; fi
 
 WORKDIR /usr/src/app
 
