@@ -1,5 +1,3 @@
-
-
 from discord import CustomActivity, Intents, Message
 from discord.ext import commands
 from discord.ext.commands import Context
@@ -12,6 +10,7 @@ from media_downloader.exceptions import ScrapingException, MediaNotFound
 import os
 import sys
 from setup_logging import setup_logger
+import logging
 
 logger = setup_logger()
 
