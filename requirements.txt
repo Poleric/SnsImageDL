@@ -2,7 +2,7 @@ attrs>=23.2.0
 discord.py>=2.3.2
 
 # general scraping
-aiohttp[speedups]>=3.9.1
+aiohttp[speedups]>=3.9.2
 filetype>=1.2.0
 
 # scrape dcinside
