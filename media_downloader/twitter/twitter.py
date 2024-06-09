@@ -105,7 +105,7 @@ class Twitter(Extractor):
                 "artist": {
                     "name": tweet_embed["user"]["name"],
                     "display_name": tweet_embed["user"]["screen_name"],
-                    "webpage_url": f"https://twitter.com/{tweet_embed["user"]["name"]}"
+                    "webpage_url": f"https://twitter.com/{tweet_embed["user"]["screen_name"]}"
                 },
                 "keywords": [hashtag["text"] for hashtag in tweet_embed["entities"]["hashtags"]]
             }
