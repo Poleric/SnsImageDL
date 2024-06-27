@@ -2,13 +2,10 @@ services:
     bot:
         user: "${UID}:${GID}"
         build: .
-        volumes:
-            - ./saved_media:/usr/src/app/saved_media
-            - ./logs:/usr/src/app/logs
+        container_name: discord-image-downloader
         environment:
             DISCORD_BOT_TOKEN: ${DISCORD_BOT_TOKEN}
             PIXIV_REFRESH_TOKEN: ${PIXIV_REFRESH_TOKEN}
-
-volumes:
-    media:
-    logs:
+        volumes:
+            - ./saved_media:/usr/src/app/saved_media
+            - ./logs:/usr/src/app/logs
