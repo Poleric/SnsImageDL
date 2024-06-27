@@ -4,9 +4,9 @@ WORKDIR /usr/src/app
 
 ARG TARGETARCH
 
-COPY build_pyexiv2_on_arm.sh .
+COPY build_pyexiv2.sh .
 
-RUN ./build_pyexiv2_on_arm.sh
+RUN ./build_pyexiv2.sh
 
 COPY requirements.txt ./
 
