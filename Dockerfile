@@ -1,16 +1,12 @@
-FROM python:3.12
+FROM python:3.12-alpine
 
-WORKDIR /
+WORKDIR /usr/src/app
 
 ARG TARGETARCH
 
-COPY ./build_pyexiv2_on_arm.sh .
+COPY build_pyexiv2_on_arm.sh .
 
-RUN if [ $TARGETARCH = "arm64" ]; then \
-      ./build_pyexiv2_on_arm.sh \
-    ; fi
-
-WORKDIR /usr/src/app
+RUN ./build_pyexiv2_on_arm.sh
 
 COPY requirements.txt ./
 

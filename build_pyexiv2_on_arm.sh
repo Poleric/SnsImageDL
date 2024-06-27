@@ -1,8 +1,8 @@
-#!/bin/bash
+#!/bin/sh
 set -e
 
-apt-get update
-apt-get install -y git cmake g++ libinih-dev
+
+apk add --update --no-cache git gcc g++ cmake make expat-dev zlib-dev brotli-dev libintl gettext-dev libxml2-utils inih-dev inih-inireader-dev
 
 git clone https://github.com/LeoHsiao1/pyexiv2.git
 git clone https://github.com/Exiv2/exiv2.git
@@ -27,3 +27,7 @@ g++ exiv2api.cpp -o py3.12-linux/exiv2api.so \
 
 cd ../../
 python3.12 -m pip install .
+
+# cleanup
+cd ../
+rm -rf exiv2/ pyexiv2/
