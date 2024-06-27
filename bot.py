@@ -9,10 +9,12 @@ from media_downloader.exceptions import ScrapingException, MediaNotFound
 
 import os
 import sys
-from setup_logging import setup_logger
+from setup_logging import setup_logging
 import logging
 
-logger = setup_logger()
+setup_logging()
+
+logger = logging.getLogger("bot")
 
 BOT_TOKEN = os.getenv("DISCORD_BOT_TOKEN")
 if not BOT_TOKEN:

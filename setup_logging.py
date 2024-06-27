@@ -1,31 +1,23 @@
+import os
 import discord
 import logging
+from logging import StreamHandler
 from logging.handlers import TimedRotatingFileHandler
-import os
 
 
-def setup_logger(*, log_directory: str = "./logs/"):
+def setup_logging(*, log_directory: str = "./logs") -> None:
+    # info logger to stdout
+    stream_handler = StreamHandler()
+    stream_handler.setLevel(level=logging.INFO)
+    discord.utils.setup_logging(handler=stream_handler, root=True)
+
+    # debug logger to file
     os.makedirs(log_directory, exist_ok=True)
-
-    discord.utils.setup_logging()
-
-    logger = logging.getLogger("root")
-    logger.setLevel(logging.DEBUG)
-
-    discord_stream_handler = logger.handlers[0]
-    discord_stream_handler.setLevel(logging.INFO)
-
     file_handler = TimedRotatingFileHandler(
-        filename="./logs/bot.log",
+        filename=f"{log_directory}/bot.log",
         when="midnight",
         backupCount=7,
         encoding="utf-8"
     )
-    file_handler.setLevel(logging.DEBUG)
-    file_handler.setFormatter(
-        logging.Formatter('[{asctime}] [{levelname:<8}] {name}: {message}', "%Y-%m-%d %H:%M:%S", style='{')
-    )
-
-    logger.addHandler(file_handler)
-
-    return logger
+    formatter = logging.Formatter('[{asctime}] [{levelname:<8}] {name}: {message}', "%Y-%m-%d %H:%M:%S", style='{')
+    discord.utils.setup_logging(handler=file_handler, formatter=formatter, level=logging.DEBUG, root=True)
