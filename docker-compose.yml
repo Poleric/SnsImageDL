@@ -1,17 +1,10 @@
 services:
     bot:
+        user: "${UID}:${GID}"
         build: .
         volumes:
-            - type: bind
-              source: ./saved_media
-              target: /usr/src/app/saved_media
-              bind:
-                  create_host_path: true
-            - type: bind
-              source: ./logs
-              target: /usr/src/app/logs
-              bind:
-                  create_host_path: true
+            - ./saved_media:/usr/src/app/saved_media
+            - ./logs:/usr/src/app/logs
         environment:
             DISCORD_BOT_TOKEN: ${DISCORD_BOT_TOKEN}
             PIXIV_REFRESH_TOKEN: ${PIXIV_REFRESH_TOKEN}
