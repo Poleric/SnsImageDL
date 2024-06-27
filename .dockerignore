@@ -1,0 +1,11 @@
+# ignore all
+*
+
+# allowed
+!bot.py
+!setup_logging.py
+!requirements.txt
+!build_pyexiv2_on_arm.sh
+!media_downloader/
+
+**/__pycache__

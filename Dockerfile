@@ -16,8 +16,6 @@ COPY requirements.txt ./
 
 RUN pip install --no-cache-dir -r requirements.txt
 
-COPY media_downloader/ .
-COPY bot.py .
-COPY setup_logging.py .
+COPY . .
 
 CMD [ "python", "./bot.py"]
