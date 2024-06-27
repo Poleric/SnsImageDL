@@ -58,7 +58,7 @@ async def on_message(msg: Message):
 
 @bot.listen()
 async def on_ready():
-    logging.info(f"Bot ready. Logged in as: {bot.user.name}")
+    logger.info(f"Bot ready. Logged in as: {bot.user.name}")
 
 
 @bot.command()
