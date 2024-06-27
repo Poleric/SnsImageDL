@@ -8,6 +8,10 @@ COPY build_pyexiv2.sh .
 
 RUN ./build_pyexiv2.sh
 
+RUN if [ $TARGETARCH = "arm64" ]; then \
+      apk add --update --no-cache gcc libc-dev libffi-dev  # build wheel for cffi \
+    ; fi
+
 COPY requirements.txt ./
 
 RUN pip install --no-cache-dir -r requirements.txt
