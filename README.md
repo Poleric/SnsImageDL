@@ -5,8 +5,7 @@ Sns Image Downloader (Bot)
 
 Download images and videos and embeds useful metadata from links.
 
-Used with a bot to automatically download images and videos from links containing them. \
-... and add metadata while at it.
+Used with a discord bot to look for links in a discord channel.
 
 Currently only supports a few [sites](#supported-sites), but working on supporting more.
 
