@@ -1,9 +1,11 @@
-Media Downloader Bot
+Sns Image Downloader (Bot)
 ====================
 
 <sub>I'm too lazy to click "Save image as..."</sub>
 
-A bot to automatically download images and videos from links containing them. \
+Download images and videos and embeds useful metadata from links.
+
+Used with a bot to automatically download images and videos from links containing them. \
 ... and add metadata while at it.
 
 Currently only supports a few [sites](#supported-sites), but working on supporting more.
