@@ -1,1 +1,0 @@
-from .dcinside import Dcinside
