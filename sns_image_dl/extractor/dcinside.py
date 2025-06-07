@@ -18,6 +18,9 @@ class Dcinside(Extractor):
     URL_REGEX: re.Pattern = re.compile(
         r"https://(?:gall|m).dcinside.com/[a-zA-Z/]*(?:\?id=|(?:board|m)/)(\w+)(?:&no=|/)(\d+)")
 
+    def __init__(self):
+        raise NotImplementedError
+
     @override
     def is_link_supported(self, url: str) -> bool:
         return bool(self.URL_REGEX.match(url))
