@@ -7,5 +7,5 @@ class Extractor(Protocol):
     def is_link_supported(self, url: str) -> bool:
         raise NotImplementedError
 
-    async def extract(self, url: str) -> AsyncGenerator[Media, None]:
+    def extract(self, url: str) -> AsyncGenerator[Media, None]:
         raise NotImplementedError

@@ -101,7 +101,7 @@ class Twitter(Extractor):
                 raise NotImplementedError
 
     @override
-    async def extract(self, url: str) -> AsyncGenerator[Media, None]:  # noqa
+    async def extract(self, url: str) -> AsyncGenerator[Media, None]:
         tweet_id = self._get_tweet_id(url)  # checks for link supported as well
 
         tweet = await self._fetch(tweet_id)

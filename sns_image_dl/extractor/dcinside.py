@@ -33,6 +33,6 @@ class Dcinside(Extractor):
         return res[1], res[2]
 
     @override
-    async def extract(self, url: str) -> AsyncGenerator[Media, None]:  # noqa
-        raise NotImplementedError
+    async def extract(self, url: str) -> AsyncGenerator[Media, None]:
+        yield NotImplemented
         # TODO: im lazy

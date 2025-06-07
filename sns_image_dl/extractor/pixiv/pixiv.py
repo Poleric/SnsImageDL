@@ -3,7 +3,7 @@ import functools
 import logging
 import re
 from io import BytesIO
-from typing import override, AsyncGenerator, Iterable
+from typing import override, Iterable, AsyncGenerator
 
 import msgspec
 from pixivpy3 import AppPixivAPI, PixivError
@@ -75,7 +75,7 @@ class Pixiv(Extractor):
                 raise NotImplementedError
 
     @override
-    async def extract(self, url: str) -> AsyncGenerator[Media, None]:  # noqa
+    async def extract(self, url: str) -> AsyncGenerator[Media, None]:
         illust_id = self._get_illust_id(url)
 
         illust = await self._fetch(illust_id)
