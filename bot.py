@@ -116,6 +116,7 @@ class ImageDLBot(Bot):
             processed.append(media)
         return processed
 
+
 command_prefix = os.getenv("COMMAND_PREFIX") or "."
 logger.info(f"Command prefix set to {command_prefix}")
 
@@ -153,6 +154,9 @@ async def sync(ctx: Context, globally: bool = False):
 
 @bot.listen("on_message")
 async def autosave(message: Message, /) -> None:
+    if message.author == bot.user:
+        return
+
     urls = bot.URL_REGEX.findall(message.content)
     if not urls:
         return
