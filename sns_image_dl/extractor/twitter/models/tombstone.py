@@ -1,14 +1,18 @@
 ##########################
 # Twitter CDN API Schema #
 ##########################
+from typing import ClassVar
+
 from msgspec import Struct
 
 from sns_image_dl.extractor.twitter.models.base import TweetResponse
 
 __all__ = (
+    "EntityReference",
+    "TombstoneEntities",
+    "TombstoneDetails",
+    "Tombstone",
     "TweetTombstone",
-    "AgeRestrictedTombstone",
-    "PostDeletedTombstone"
 )
 
 
@@ -24,22 +28,18 @@ class TombstoneEntities(Struct):
     ref: EntityReference
 
 
-class TombstoneDetails(Struct, tag_field="text"):
+class TombstoneDetails(Struct):
+    text: str
     entities: list[TombstoneEntities]
     rtl: bool
 
-
-class AgeRestrictedTombstone(TombstoneDetails,
-                             tag="Age-restricted adult content. This content might not be appropriate for people under 18 years old. To view this media, you’ll need to log in to X. Learn more"):
-    pass
-
-
-class PostDeletedTombstone(TombstoneDetails, tag="This Post was deleted by the Post author. Learn more"):
-    pass
+    AgeRestrictedText: ClassVar[str] = \
+        "Age-restricted adult content. This content might not be appropriate for people under 18 years old. To view this media, you’ll need to log in to X. Learn more"
+    PostDeletedText: ClassVar[str] = "This Post was deleted by the Post author. Learn more"
 
 
 class Tombstone(Struct):
-    text: AgeRestrictedTombstone | PostDeletedTombstone
+    text: TombstoneDetails
 
 
 class TweetTombstone(TweetResponse):

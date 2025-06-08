@@ -61,15 +61,14 @@ class Twitter(Extractor):
             )
 
             if isinstance(tweet, TweetTombstone):
-                match tweet.tombstone.text:  # noqa, weird code unreachable thing
-                    case AgeRestrictedTombstone():
+                match tweet.tombstone.text.text:  # noqa
+                    case TombstoneDetails.AgeRestrictedText:
                         raise AgeRestricted
-                    case PostDeletedTombstone():
+                    case TombstoneDetails.PostDeletedText:
                         raise MediaDeleted
-                    case _:
-                        logger.error(f"Unrecognizeable tweet data. Raw dump: {msgspec.json.encode(tweet)}")
-                        raise Exception
-
+                    case reason:
+                        logger.warning(f"Unrecognized tombstone reason. Raw dump: {msgspec.to_builtins(tweet)}")
+                        raise Exception(f"Failed to retrieve the media. Reason: {reason}")
             return tweet
 
     @staticmethod
