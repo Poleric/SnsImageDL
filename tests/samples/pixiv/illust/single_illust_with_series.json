@@ -1,0 +1,80 @@
+{
+    "illust" : {
+        "id" : 112597880,
+        "title" : "Argument",
+        "type" : "manga",
+        "image_urls" : {
+            "square_medium" : "https://i.pximg.net/c/360x360_10_webp/img-master/img/2023/10/16/14/45/50/112597880_p0_square1200.jpg",
+            "medium" : "https://i.pximg.net/c/540x540_70/img-master/img/2023/10/16/14/45/50/112597880_p0_master1200.jpg",
+            "large" : "https://i.pximg.net/c/600x1200_90_webp/img-master/img/2023/10/16/14/45/50/112597880_p0_master1200.jpg"
+        },
+        "caption" : "AkiShiho sasakoi 1p mini manga",
+        "restrict" : 0,
+        "user" : {
+            "id" : 89031772,
+            "name" : "TaiyouNeko",
+            "account" : "user_hpzd3722",
+            "profile_image_urls" : {
+                "medium" : "https://i.pximg.net/user-profile/img/2023/09/21/17/33/07/24962317_509538d8abbe530cb367807c9e4cf167_170.png"
+            },
+            "is_followed" : false,
+            "is_accept_request" : false
+        },
+        "tags" : [ {
+            "name" : "Manga",
+            "translated_name" : null
+        }, {
+            "name" : "ささやくように恋を唄う",
+            "translated_name" : "Whisper Me a Love Song"
+        }, {
+            "name" : "ささ恋",
+            "translated_name" : "Whisper Me a Love Song"
+        }, {
+            "name" : "水口亜紀",
+            "translated_name" : null
+        }, {
+            "name" : "泉志帆",
+            "translated_name" : "Shiho Izumi"
+        }, {
+            "name" : "百合",
+            "translated_name" : "yuri"
+        }, {
+            "name" : "漫画",
+            "translated_name" : "manga"
+        }, {
+            "name" : "1P漫画",
+            "translated_name" : "1-page manga"
+        }, {
+            "name" : "GL",
+            "translated_name" : "lesbian"
+        }, {
+            "name" : "女の子",
+            "translated_name" : "girl"
+        } ],
+        "tools" : [ ],
+        "create_date" : "2023-10-16T14:45:50+09:00",
+        "page_count" : 1,
+        "width" : 1181,
+        "height" : 1748,
+        "sanity_level" : 2,
+        "x_restrict" : 0,
+        "series" : {
+            "id" : 228578,
+            "title" : "Sasakoi Nichijou "
+        },
+        "meta_single_page" : {
+            "original_image_url" : "https://i.pximg.net/img-original/img/2023/10/16/14/45/50/112597880_p0.jpg"
+        },
+        "meta_pages" : [ ],
+        "total_view" : 18753,
+        "total_bookmarks" : 1398,
+        "is_bookmarked" : false,
+        "visible" : true,
+        "is_muted" : false,
+        "total_comments" : 3,
+        "illust_ai_type" : 1,
+        "illust_book_style" : 0,
+        "request" : null,
+        "comment_access_control" : 0
+    }
+}

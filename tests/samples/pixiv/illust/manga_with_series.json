@@ -1,0 +1,176 @@
+{
+    "illust" : {
+        "id" : 131006006,
+        "title" : "お兄ちゃんはおしまい その100",
+        "type" : "manga",
+        "image_urls" : {
+            "square_medium" : "https://i.pximg.net/c/360x360_10_webp/img-master/img/2025/05/31/12/20/56/131006006_p0_square1200.jpg",
+            "medium" : "https://i.pximg.net/c/540x540_70/img-master/img/2025/05/31/12/20/56/131006006_p0_master1200.jpg",
+            "large" : "https://i.pximg.net/c/600x1200_90_webp/img-master/img/2025/05/31/12/20/56/131006006_p0_master1200.jpg"
+        },
+        "caption" : "お陰様で第100話！記念のお遊び回です。<br /><br />おにまい同人誌版33巻6/1発売！同人書店様、BOOTH、DLsite等にて！<br /><br />商業版おにまい9巻 <a href=\"https://amzn.to/4exctVE\" target='_blank' rel='noopener noreferrer'>https://amzn.to/4exctVE</a><br />9巻特装版 <a href=\"https://amzn.to/4emfpob\" target='_blank' rel='noopener noreferrer'>https://amzn.to/4emfpob</a><br />アンソロ5巻 <a href=\"https://amzn.to/3TLkD4E\" target='_blank' rel='noopener noreferrer'>https://amzn.to/3TLkD4E</a><br /><br />【いつものお知らせ】<br /><br />同人誌＆ドラマCDシリーズ、書店委託＆配信中！<br />メロン→ <a href=\"https://www.melonbooks.co.jp/circle/index.php?circle_id=3753\" target='_blank' rel='noopener noreferrer'>https://www.melonbooks.co.jp/circle/index.php?circle_id=3753</a><br />とら→ <a href=\"https://ecs.toranoana.jp/tora/ec/cot/circle/2UPA116P847KdC6Rd687/all/\" target='_blank' rel='noopener noreferrer'>https://ecs.toranoana.jp/tora/ec/cot/circle/2UPA116P847KdC6Rd687/all/</a><br />BOOTH→ <a href=\"https://grinp.booth.pm/\" target=\"_blank\">https://grinp.booth.pm/</a><br />DLsite→ <a href=\"https://www.dlsite.com/home/circle/profile/=/maker_id/RG40614.html\" target='_blank' rel='noopener noreferrer'>https://www.dlsite.com/home/circle/profile/=/maker_id/RG40614.html</a><br />FANZA→ <a href=\"https://www.dmm.co.jp/dc/doujin/-/list/=/article=maker/id=75890/\" target='_blank' rel='noopener noreferrer'>https://www.dmm.co.jp/dc/doujin/-/list/=/article=maker/id=75890/</a><br /><br />LINEスタンプ第3弾発売中！<br /><a href=\"https://store.line.me/stickershop/product/15428988/ja?from=sticker\" target='_blank' rel='noopener noreferrer'>https://store.line.me/stickershop/product/15428988/ja?from=sticker</a><br /><br />支援サイトにて新作の先行公開やちょっとした限定コンテンツが閲覧できます。<br />【FANBOX】<a href=\"https://www.pixiv.net/fanbox/creator/159912\" target=\"_blank\">https://www.pixiv.net/fanbox/creator/159912</a><br />【Fantia】<a href=\"https://fantia.jp/fanclubs/1446\" target='_blank' rel='noopener noreferrer'>https://fantia.jp/fanclubs/1446</a>",
+        "restrict" : 0,
+        "user" : {
+            "id" : 159912,
+            "name" : "ねことうふ",
+            "account" : "nekotou",
+            "profile_image_urls" : {
+                "medium" : "https://i.pximg.net/user-profile/img/2018/01/06/03/04/12/13655100_b0045a0c606f9d997b2278106d5c8769_170.png"
+            },
+            "is_followed" : false,
+            "is_accept_request" : false
+        },
+        "tags" : [ {
+            "name" : "漫画",
+            "translated_name" : "manga"
+        }, {
+            "name" : "お兄ちゃんはおしまい",
+            "translated_name" : "Onii-chan is Done For"
+        }, {
+            "name" : "原作",
+            "translated_name" : null
+        }, {
+            "name" : "TSF",
+            "translated_name" : "transsexual fiction"
+        }, {
+            "name" : "猫耳",
+            "translated_name" : "cat ears"
+        }, {
+            "name" : "緒山が悪いんだぞ…",
+            "translated_name" : null
+        }, {
+            "name" : "猫じゃらし",
+            "translated_name" : "green foxtail"
+        }, {
+            "name" : "猫化",
+            "translated_name" : "transforming into a cat"
+        }, {
+            "name" : "オリジナル3000users入り",
+            "translated_name" : "original 3000+ bookmarks"
+        }, {
+            "name" : "にゃにこれかわいい",
+            "translated_name" : "cute cat"
+        } ],
+        "tools" : [ "CLIP STUDIO PAINT" ],
+        "create_date" : "2025-05-31T12:20:56+09:00",
+        "page_count" : 14,
+        "width" : 650,
+        "height" : 918,
+        "sanity_level" : 2,
+        "x_restrict" : 0,
+        "series" : {
+            "id" : 12,
+            "title" : "お兄ちゃんはおしまい"
+        },
+        "meta_single_page" : { },
+        "meta_pages" : [ {
+            "image_urls" : {
+                "square_medium" : "https://i.pximg.net/c/360x360_10_webp/img-master/img/2025/05/31/12/20/56/131006006_p0_square1200.jpg",
+                "medium" : "https://i.pximg.net/c/540x540_70/img-master/img/2025/05/31/12/20/56/131006006_p0_master1200.jpg",
+                "large" : "https://i.pximg.net/c/600x1200_90_webp/img-master/img/2025/05/31/12/20/56/131006006_p0_master1200.jpg",
+                "original" : "https://i.pximg.net/img-original/img/2025/05/31/12/20/56/131006006_p0.png"
+            }
+        }, {
+            "image_urls" : {
+                "square_medium" : "https://i.pximg.net/c/360x360_10_webp/img-master/img/2025/05/31/12/20/56/131006006_p1_square1200.jpg",
+                "medium" : "https://i.pximg.net/c/540x540_70/img-master/img/2025/05/31/12/20/56/131006006_p1_master1200.jpg",
+                "large" : "https://i.pximg.net/c/600x1200_90_webp/img-master/img/2025/05/31/12/20/56/131006006_p1_master1200.jpg",
+                "original" : "https://i.pximg.net/img-original/img/2025/05/31/12/20/56/131006006_p1.png"
+            }
+        }, {
+            "image_urls" : {
+                "square_medium" : "https://i.pximg.net/c/360x360_10_webp/img-master/img/2025/05/31/12/20/56/131006006_p2_square1200.jpg",
+                "medium" : "https://i.pximg.net/c/540x540_70/img-master/img/2025/05/31/12/20/56/131006006_p2_master1200.jpg",
+                "large" : "https://i.pximg.net/c/600x1200_90_webp/img-master/img/2025/05/31/12/20/56/131006006_p2_master1200.jpg",
+                "original" : "https://i.pximg.net/img-original/img/2025/05/31/12/20/56/131006006_p2.png"
+            }
+        }, {
+            "image_urls" : {
+                "square_medium" : "https://i.pximg.net/c/360x360_10_webp/img-master/img/2025/05/31/12/20/56/131006006_p3_square1200.jpg",
+                "medium" : "https://i.pximg.net/c/540x540_70/img-master/img/2025/05/31/12/20/56/131006006_p3_master1200.jpg",
+                "large" : "https://i.pximg.net/c/600x1200_90_webp/img-master/img/2025/05/31/12/20/56/131006006_p3_master1200.jpg",
+                "original" : "https://i.pximg.net/img-original/img/2025/05/31/12/20/56/131006006_p3.png"
+            }
+        }, {
+            "image_urls" : {
+                "square_medium" : "https://i.pximg.net/c/360x360_10_webp/img-master/img/2025/05/31/12/20/56/131006006_p4_square1200.jpg",
+                "medium" : "https://i.pximg.net/c/540x540_70/img-master/img/2025/05/31/12/20/56/131006006_p4_master1200.jpg",
+                "large" : "https://i.pximg.net/c/600x1200_90_webp/img-master/img/2025/05/31/12/20/56/131006006_p4_master1200.jpg",
+                "original" : "https://i.pximg.net/img-original/img/2025/05/31/12/20/56/131006006_p4.png"
+            }
+        }, {
+            "image_urls" : {
+                "square_medium" : "https://i.pximg.net/c/360x360_10_webp/img-master/img/2025/05/31/12/20/56/131006006_p5_square1200.jpg",
+                "medium" : "https://i.pximg.net/c/540x540_70/img-master/img/2025/05/31/12/20/56/131006006_p5_master1200.jpg",
+                "large" : "https://i.pximg.net/c/600x1200_90_webp/img-master/img/2025/05/31/12/20/56/131006006_p5_master1200.jpg",
+                "original" : "https://i.pximg.net/img-original/img/2025/05/31/12/20/56/131006006_p5.png"
+            }
+        }, {
+            "image_urls" : {
+                "square_medium" : "https://i.pximg.net/c/360x360_10_webp/img-master/img/2025/05/31/12/20/56/131006006_p6_square1200.jpg",
+                "medium" : "https://i.pximg.net/c/540x540_70/img-master/img/2025/05/31/12/20/56/131006006_p6_master1200.jpg",
+                "large" : "https://i.pximg.net/c/600x1200_90_webp/img-master/img/2025/05/31/12/20/56/131006006_p6_master1200.jpg",
+                "original" : "https://i.pximg.net/img-original/img/2025/05/31/12/20/56/131006006_p6.png"
+            }
+        }, {
+            "image_urls" : {
+                "square_medium" : "https://i.pximg.net/c/360x360_10_webp/img-master/img/2025/05/31/12/20/56/131006006_p7_square1200.jpg",
+                "medium" : "https://i.pximg.net/c/540x540_70/img-master/img/2025/05/31/12/20/56/131006006_p7_master1200.jpg",
+                "large" : "https://i.pximg.net/c/600x1200_90_webp/img-master/img/2025/05/31/12/20/56/131006006_p7_master1200.jpg",
+                "original" : "https://i.pximg.net/img-original/img/2025/05/31/12/20/56/131006006_p7.png"
+            }
+        }, {
+            "image_urls" : {
+                "square_medium" : "https://i.pximg.net/c/360x360_10_webp/img-master/img/2025/05/31/12/20/56/131006006_p8_square1200.jpg",
+                "medium" : "https://i.pximg.net/c/540x540_70/img-master/img/2025/05/31/12/20/56/131006006_p8_master1200.jpg",
+                "large" : "https://i.pximg.net/c/600x1200_90_webp/img-master/img/2025/05/31/12/20/56/131006006_p8_master1200.jpg",
+                "original" : "https://i.pximg.net/img-original/img/2025/05/31/12/20/56/131006006_p8.png"
+            }
+        }, {
+            "image_urls" : {
+                "square_medium" : "https://i.pximg.net/c/360x360_10_webp/img-master/img/2025/05/31/12/20/56/131006006_p9_square1200.jpg",
+                "medium" : "https://i.pximg.net/c/540x540_70/img-master/img/2025/05/31/12/20/56/131006006_p9_master1200.jpg",
+                "large" : "https://i.pximg.net/c/600x1200_90_webp/img-master/img/2025/05/31/12/20/56/131006006_p9_master1200.jpg",
+                "original" : "https://i.pximg.net/img-original/img/2025/05/31/12/20/56/131006006_p9.png"
+            }
+        }, {
+            "image_urls" : {
+                "square_medium" : "https://i.pximg.net/c/360x360_10_webp/img-master/img/2025/05/31/12/20/56/131006006_p10_square1200.jpg",
+                "medium" : "https://i.pximg.net/c/540x540_70/img-master/img/2025/05/31/12/20/56/131006006_p10_master1200.jpg",
+                "large" : "https://i.pximg.net/c/600x1200_90_webp/img-master/img/2025/05/31/12/20/56/131006006_p10_master1200.jpg",
+                "original" : "https://i.pximg.net/img-original/img/2025/05/31/12/20/56/131006006_p10.png"
+            }
+        }, {
+            "image_urls" : {
+                "square_medium" : "https://i.pximg.net/c/360x360_10_webp/img-master/img/2025/05/31/12/20/56/131006006_p11_square1200.jpg",
+                "medium" : "https://i.pximg.net/c/540x540_70/img-master/img/2025/05/31/12/20/56/131006006_p11_master1200.jpg",
+                "large" : "https://i.pximg.net/c/600x1200_90_webp/img-master/img/2025/05/31/12/20/56/131006006_p11_master1200.jpg",
+                "original" : "https://i.pximg.net/img-original/img/2025/05/31/12/20/56/131006006_p11.png"
+            }
+        }, {
+            "image_urls" : {
+                "square_medium" : "https://i.pximg.net/c/360x360_10_webp/img-master/img/2025/05/31/12/20/56/131006006_p12_square1200.jpg",
+                "medium" : "https://i.pximg.net/c/540x540_70/img-master/img/2025/05/31/12/20/56/131006006_p12_master1200.jpg",
+                "large" : "https://i.pximg.net/c/600x1200_90_webp/img-master/img/2025/05/31/12/20/56/131006006_p12_master1200.jpg",
+                "original" : "https://i.pximg.net/img-original/img/2025/05/31/12/20/56/131006006_p12.png"
+            }
+        }, {
+            "image_urls" : {
+                "square_medium" : "https://i.pximg.net/c/360x360_10_webp/img-master/img/2025/05/31/12/20/56/131006006_p13_square1200.jpg",
+                "medium" : "https://i.pximg.net/c/540x540_70/img-master/img/2025/05/31/12/20/56/131006006_p13_master1200.jpg",
+                "large" : "https://i.pximg.net/c/600x1200_90_webp/img-master/img/2025/05/31/12/20/56/131006006_p13_master1200.jpg",
+                "original" : "https://i.pximg.net/img-original/img/2025/05/31/12/20/56/131006006_p13.png"
+            }
+        } ],
+        "total_view" : 87253,
+        "total_bookmarks" : 4752,
+        "is_bookmarked" : false,
+        "visible" : true,
+        "is_muted" : false,
+        "total_comments" : 234,
+        "illust_ai_type" : 1,
+        "illust_book_style" : 0,
+        "request" : null,
+        "comment_access_control" : 0
+    }
+}

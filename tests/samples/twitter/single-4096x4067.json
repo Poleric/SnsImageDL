@@ -1,0 +1,178 @@
+{
+    "__typename": "Tweet",
+    "lang": "ja",
+    "favorite_count": 4783,
+    "possibly_sensitive": false,
+    "created_at": "2025-05-27T12:54:04.000Z",
+    "display_text_range": [
+        0,
+        80
+    ],
+    "entities": {
+        "hashtags": [
+            {
+                "indices": [
+                    71,
+                    80
+                ],
+                "text": "おにまいお絵描き"
+            }
+        ],
+        "urls": [],
+        "user_mentions": [],
+        "symbols": [],
+        "media": [
+            {
+                "display_url": "pic.x.com/7QqFvsRbuj",
+                "expanded_url": "https://x.com/enosawari/status/1927347574773608661/photo/1",
+                "indices": [
+                    81,
+                    104
+                ],
+                "url": "https://t.co/7QqFvsRbuj"
+            }
+        ]
+    },
+    "id_str": "1927347574773608661",
+    "text": "立川あおい「駄目…！ここで平静を保たないと…私の…クラス委員長としての、大事なｯ…役割が///」\n室崎みよ「ウィッグ付けてないのは無理ぃぃ」\n#おにまいお絵描き https://t.co/7QqFvsRbuj",
+    "user": {
+        "id_str": "1723909267",
+        "name": "榎沢（メロブ在庫追加済）",
+        "profile_image_url_https": "https://pbs.twimg.com/profile_images/1920267852302725121/_UbKOL8A_normal.jpg",
+        "screen_name": "enosawari",
+        "verified": false,
+        "is_blue_verified": false,
+        "profile_image_shape": "Circle"
+    },
+    "edit_control": {
+        "edit_tweet_ids": [
+            "1927347574773608661"
+        ],
+        "editable_until_msecs": "1748354044000",
+        "is_edit_eligible": true,
+        "edits_remaining": "5"
+    },
+    "mediaDetails": [
+        {
+            "display_url": "pic.x.com/7QqFvsRbuj",
+            "expanded_url": "https://x.com/enosawari/status/1927347574773608661/photo/1",
+            "ext_media_availability": {
+                "status": "Available"
+            },
+            "indices": [
+                81,
+                104
+            ],
+            "media_url_https": "https://pbs.twimg.com/media/Gr9IbOlWQAA7TME.jpg",
+            "original_info": {
+                "height": 4067,
+                "width": 4096,
+                "focus_rects": [
+                    {
+                        "x": 0,
+                        "y": 0,
+                        "w": 4096,
+                        "h": 2294
+                    },
+                    {
+                        "x": 29,
+                        "y": 0,
+                        "w": 4067,
+                        "h": 4067
+                    },
+                    {
+                        "x": 528,
+                        "y": 0,
+                        "w": 3568,
+                        "h": 4067
+                    },
+                    {
+                        "x": 1336,
+                        "y": 0,
+                        "w": 2034,
+                        "h": 4067
+                    },
+                    {
+                        "x": 0,
+                        "y": 0,
+                        "w": 4096,
+                        "h": 4067
+                    }
+                ]
+            },
+            "sizes": {
+                "large": {
+                    "h": 2034,
+                    "resize": "fit",
+                    "w": 2048
+                },
+                "medium": {
+                    "h": 1192,
+                    "resize": "fit",
+                    "w": 1200
+                },
+                "small": {
+                    "h": 675,
+                    "resize": "fit",
+                    "w": 680
+                },
+                "thumb": {
+                    "h": 150,
+                    "resize": "crop",
+                    "w": 150
+                }
+            },
+            "type": "photo",
+            "url": "https://t.co/7QqFvsRbuj"
+        }
+    ],
+    "photos": [
+        {
+            "backgroundColor": {
+                "red": 204,
+                "green": 214,
+                "blue": 221
+            },
+            "cropCandidates": [
+                {
+                    "x": 0,
+                    "y": 0,
+                    "w": 4096,
+                    "h": 2294
+                },
+                {
+                    "x": 29,
+                    "y": 0,
+                    "w": 4067,
+                    "h": 4067
+                },
+                {
+                    "x": 528,
+                    "y": 0,
+                    "w": 3568,
+                    "h": 4067
+                },
+                {
+                    "x": 1336,
+                    "y": 0,
+                    "w": 2034,
+                    "h": 4067
+                },
+                {
+                    "x": 0,
+                    "y": 0,
+                    "w": 4096,
+                    "h": 4067
+                }
+            ],
+            "expandedUrl": "https://x.com/enosawari/status/1927347574773608661/photo/1",
+            "url": "https://pbs.twimg.com/media/Gr9IbOlWQAA7TME.jpg",
+            "width": 4096,
+            "height": 4067
+        }
+    ],
+    "conversation_count": 6,
+    "news_action_type": "conversation",
+    "isEdited": false,
+    "isStaleEdit": false
+}

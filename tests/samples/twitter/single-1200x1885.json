@@ -1,0 +1,170 @@
+{
+    "__typename": "Tweet",
+    "lang": "en",
+    "favorite_count": 14438,
+    "possibly_sensitive": false,
+    "created_at": "2025-05-27T10:25:25.000Z",
+    "display_text_range": [
+        0,
+        16
+    ],
+    "entities": {
+        "hashtags": [],
+        "urls": [],
+        "user_mentions": [],
+        "symbols": [],
+        "media": [
+            {
+                "display_url": "pic.x.com/HTns91Rv1N",
+                "expanded_url": "https://x.com/ekureea/status/1927310164278890557/photo/1",
+                "indices": [
+                    17,
+                    40
+                ],
+                "url": "https://t.co/HTns91Rv1N"
+            }
+        ]
+    },
+    "id_str": "1927310164278890557",
+    "text": "Candy Collection https://t.co/HTns91Rv1N",
+    "user": {
+        "id_str": "424239025",
+        "name": "上倉エク",
+        "profile_image_url_https": "https://pbs.twimg.com/profile_images/1265104235013632000/NR9TBfOE_normal.jpg",
+        "screen_name": "ekureea",
+        "verified": false,
+        "is_blue_verified": true,
+        "profile_image_shape": "Circle"
+    },
+    "edit_control": {
+        "edit_tweet_ids": [
+            "1927310164278890557"
+        ],
+        "editable_until_msecs": "1748345125000",
+        "is_edit_eligible": true,
+        "edits_remaining": "5"
+    },
+    "mediaDetails": [
+        {
+            "display_url": "pic.x.com/HTns91Rv1N",
+            "expanded_url": "https://x.com/ekureea/status/1927310164278890557/photo/1",
+            "ext_media_availability": {
+                "status": "Available"
+            },
+            "indices": [
+                17,
+                40
+            ],
+            "media_url_https": "https://pbs.twimg.com/media/Gr8uXhKXkAAYDW-.jpg",
+            "original_info": {
+                "height": 1885,
+                "width": 1200,
+                "focus_rects": [
+                    {
+                        "x": 0,
+                        "y": 1028,
+                        "w": 1200,
+                        "h": 672
+                    },
+                    {
+                        "x": 0,
+                        "y": 685,
+                        "w": 1200,
+                        "h": 1200
+                    },
+                    {
+                        "x": 0,
+                        "y": 517,
+                        "w": 1200,
+                        "h": 1368
+                    },
+                    {
+                        "x": 0,
+                        "y": 0,
+                        "w": 943,
+                        "h": 1885
+                    },
+                    {
+                        "x": 0,
+                        "y": 0,
+                        "w": 1200,
+                        "h": 1885
+                    }
+                ]
+            },
+            "sizes": {
+                "large": {
+                    "h": 1885,
+                    "resize": "fit",
+                    "w": 1200
+                },
+                "medium": {
+                    "h": 1200,
+                    "resize": "fit",
+                    "w": 764
+                },
+                "small": {
+                    "h": 680,
+                    "resize": "fit",
+                    "w": 433
+                },
+                "thumb": {
+                    "h": 150,
+                    "resize": "crop",
+                    "w": 150
+                }
+            },
+            "type": "photo",
+            "url": "https://t.co/HTns91Rv1N"
+        }
+    ],
+    "photos": [
+        {
+            "backgroundColor": {
+                "red": 204,
+                "green": 214,
+                "blue": 221
+            },
+            "cropCandidates": [
+                {
+                    "x": 0,
+                    "y": 1028,
+                    "w": 1200,
+                    "h": 672
+                },
+                {
+                    "x": 0,
+                    "y": 685,
+                    "w": 1200,
+                    "h": 1200
+                },
+                {
+                    "x": 0,
+                    "y": 517,
+                    "w": 1200,
+                    "h": 1368
+                },
+                {
+                    "x": 0,
+                    "y": 0,
+                    "w": 943,
+                    "h": 1885
+                },
+                {
+                    "x": 0,
+                    "y": 0,
+                    "w": 1200,
+                    "h": 1885
+                }
+            ],
+            "expandedUrl": "https://x.com/ekureea/status/1927310164278890557/photo/1",
+            "url": "https://pbs.twimg.com/media/Gr8uXhKXkAAYDW-.jpg",
+            "width": 1200,
+            "height": 1885
+        }
+    ],
+    "conversation_count": 37,
+    "news_action_type": "conversation",
+    "isEdited": false,
+    "isStaleEdit": false
+}
