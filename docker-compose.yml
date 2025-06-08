@@ -1,0 +1,15 @@
+services:
+    image-dl-bot:
+        build:
+            dockerfile: docker/Dockerfile
+            context: .
+        environment:
+            DISCORD_BOT_TOKEN: ${DISCORD_BOT_TOKEN}
+            COMMAND_PREFIX: "."
+            OUTPUT_DIRECTORY: /data
+            CHANNEL_IDS: ${CHANNEL_IDS}  # <channel_1>,<channel_2>
+
+            PIXIV_REFRESH_TOKEN: ${PIXIV_REFRESH_TOKEN}
+            TWITTER_AUTH_TOKEN: ${TWITTER_AUTH_TOKEN}  # not used as of writing
+        volumes:
+            - ./saved_media:/data:z
