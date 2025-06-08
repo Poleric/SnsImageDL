@@ -14,6 +14,7 @@ from discord.utils import setup_logging
 
 from sns_image_dl.exceptions import UnsupportedLink
 from sns_image_dl.extractor import Extractor, Pixiv, Twitter, Dcinside
+from sns_image_dl.tagging import Tagger, ExifTagger, JpegCommentTagger, XmpTagger
 from sns_image_dl.media import Media
 
 setup_logging()
@@ -34,6 +35,7 @@ class ImageDLBot(Bot):
         super().__init__(*args, **kwargs)
 
         self.extractors: list[Extractor] = []
+        self.taggers: list[Tagger] = [ExifTagger, JpegCommentTagger, XmpTagger]
         self.session: aiohttp.ClientSession | None = None
 
         # configurable
@@ -97,7 +99,15 @@ class ImageDLBot(Bot):
         output_path /= media.metadata["filename"]
 
         with output_path.open("wb") as f:
-            f.write(media.content)
+            content = media.content
+
+            for tagger in self.taggers:
+                if not tagger.is_extension_supported(output_path.suffix):
+                    continue
+
+                content = tagger.tag(content, media.metadata)
+
+            f.write(content)
 
 
     async def process(self, url: str, /) -> list[Media]:
