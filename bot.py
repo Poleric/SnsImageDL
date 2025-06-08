@@ -35,7 +35,7 @@ class ImageDLBot(Bot):
         super().__init__(*args, **kwargs)
 
         self.extractors: list[Extractor] = []
-        self.taggers: list[Tagger] = [ExifTagger, JpegCommentTagger, XmpTagger]
+        self.taggers: list[Tagger] = [ExifTagger(), JpegCommentTagger(), XmpTagger()]
         self.session: aiohttp.ClientSession | None = None
 
         # configurable
