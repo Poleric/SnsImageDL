@@ -1,0 +1,15 @@
+[project]
+name = "snsimagedl-twitter"
+version = "1.0.0"
+description = "A snsimagedl twitter extension for downloading from Twitter (X)"
+requires-python = ">=3.14,<4.0"
+dependencies = [
+    "aiohttp[speedups]>=3.13.2",
+]
+authors = [
+    {name = "DizzyNight", email = "laffey@dizzynight.moe"}
+]
+
+[build-system]
+requires = ["uv_build>=0.9.21,<0.10.0"]
+build-backend = "uv_build"

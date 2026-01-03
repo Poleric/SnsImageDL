@@ -1,28 +1,27 @@
 [project]
-name = "sns-image-dl"
-version = "0.1.0"
+name = "snsimagedl"
+version = "1.0.0"
 description = ""
-requires-python = ">=3.13,<4.0"
+requires-python = ">=3.14,<4.0"
 dependencies = [
-    "aiohttp[speedups] (>=3.12.7,<4.0.0)",
-    "pixivpy3 (>=3.7.5,<4.0.0)",
-    "pyexiv2 (>=2.15.4,<3.0.0)",
-    "filetype (>=1.2.0,<2.0.0)",
-    "msgspec (>=0.19.0,<0.20.0)",
+    "snsimagedl-lib",
+    "snsimagedl-twitter",
+    "snsimagedl-pixiv",
+    "snsimagedl-dcinside",
+    "snsimagedl-bot"
 ]
 authors = [
-    {name = "DizzyNight", email = "laffey@dizzynight.moe"}
+    { name = "DizzyNight", email = "laffey@dizzynight.moe" }
 ]
 license = { text = "Unlicense" }
-readme = "README.md"
+readme = "REAME.md"
 
-[project.urls]
-repository = "https://github.com/Poleric/SnsImageDL"
+[tool.uv.sources]
+snsimagedl-lib = { workspace = true }
+snsimagedl-twitter = { workspace = true }
+snsimagedl-pixiv = { workspace = true }
+snsimagedl-dcinside = { workspace = true }
+snsimagedl-bot = { workspace = true }
 
-[tool.poetry.group.test.dependencies]
-pytest = "^8.4.0"
-pytest-mock = "^3.14.1"
-
-[build-system]
-requires = ["poetry-core>=2.0.0,<3.0.0"]
-build-backend = "poetry.core.masonry.api"
+[tool.uv.workspace]
+members = ["packages/*"]
