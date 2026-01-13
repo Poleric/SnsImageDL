@@ -1,11 +1,19 @@
-FROM python:3.13-slim
+FROM python:3.14-slim
+
+COPY --from=ghcr.io/astral-sh/uv:latest /uv /uvx /bin/
 
 WORKDIR /usr/src/app/
 
-RUN pip install --no-cache-dir discord.py
+ENV UV_NO_DEV=1
+
+RUN --mount=type=cache,target=/root/.cache/uv \
+    --mount=type=bind,source=uv.lock,target=uv.lock \
+    --mount=type=bind,source=pyproject.toml,target=pyproject.toml \
+    uv sync --frozen --no-install-workspace
 
 COPY . .
 
-RUN pip install --no-cache-dir -e .
+RUN --mount=type=cache,target=/root/.cache/uv \
+    uv sync --locked
 
-CMD ["python3", "bot.py"]
+CMD ["uv", "run", "main.py"]
