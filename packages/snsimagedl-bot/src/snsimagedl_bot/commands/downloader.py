@@ -1,7 +1,6 @@
 from __future__ import annotations
 
 import re
-from datetime import datetime
 from typing import TYPE_CHECKING, Collection, ClassVar
 
 from discord import Message, VoiceChannel, TextChannel, Embed
@@ -139,7 +138,7 @@ class Downloader(Cog):
         if self.bot.watch_channel_ids:
             await ctx.reply(
                 "Watching channels:\n" +
-                "\n".join(self.bot.get_channel(channel_id).mention for channel_id in self.bot.config.watch_channel_ids),
+                "\n".join(self.bot.get_channel(channel_id).mention for channel_id in self.bot.watch_channel_ids),
                 ephemeral=True
             )
         else:

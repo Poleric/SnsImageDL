@@ -3,12 +3,11 @@ from pathlib import Path
 from discord.ext.commands import Bot
 
 from snsimagedl_bot import commands
+from snsimagedl_lib import MediaDownloader
 
 __all__ = (
     "SnsImageDlBot",
 )
-
-from snsimagedl_lib import MediaDownloader
 
 
 class SnsImageDlBot(Bot):
