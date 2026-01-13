@@ -1,9 +1,11 @@
-from _typeshed import SupportsWrite
 from dataclasses import dataclass
 from pathlib import Path
-from typing import Collection
+from typing import Collection, TYPE_CHECKING
 
 from snsimagedl_lib import Extractor, FileTagger, Metadata
+
+if TYPE_CHECKING:
+    from _typeshed import SupportsWrite
 
 __all__ = (
     "QueryResult",
