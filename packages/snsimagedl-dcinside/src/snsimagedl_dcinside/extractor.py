@@ -1,4 +1,4 @@
-from typing import override
+from typing import override, Collection
 
 import aiohttp
 
@@ -10,7 +10,7 @@ class DcinsideExtractor(Extractor):
         self.session = session
 
     @override
-    async def query(self, query: str) -> tuple[Metadata] | None:
+    async def query(self, query: str) -> Collection[Metadata] | None:
         ...
 
     @override
