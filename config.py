@@ -22,7 +22,6 @@ def config_namer(name: str) -> str:
 
 
 class ExtractorConfig[T: Extractor](Struct, tag_field="type", tag=config_namer):
-    type: str
     output_directory: str | None = None
 
     @property
@@ -47,8 +46,6 @@ class PixivConfig(ExtractorConfig[PixivExtractor], kw_only=True):
 
 
 class TaggerConfig[T: FileTagger](Struct, tag_field="type", tag=config_namer):
-    type: str
-
     @property
     def instance(self) -> T:
         raise NotImplementedError
