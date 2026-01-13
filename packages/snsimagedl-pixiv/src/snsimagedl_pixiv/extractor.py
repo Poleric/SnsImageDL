@@ -96,7 +96,7 @@ class PixivExtractor(Extractor):
     async def download(self, media: Metadata) -> bytes:
         with BytesIO() as f:
             try:
-                return await self.loop.run_in_executor(
+                await self.loop.run_in_executor(
                     None,
                     functools.partial(
                         self.session.download,
@@ -104,6 +104,7 @@ class PixivExtractor(Extractor):
                         fname=f
                     )
                 )  # noqa
+                return f.getvalue()
             except PixivError:
                 logger.exception(f"Download for {media.source_url} failed.")
                 raise
