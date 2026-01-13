@@ -4,6 +4,7 @@ from pathlib import Path
 import aiohttp
 import msgspec.json
 from discord import Intents
+from discord.utils import setup_logging
 
 import config as app_config
 from config import AppConfig
@@ -11,6 +12,7 @@ from snsimagedl_bot.bot import SnsImageDlBot
 
 
 async def main():
+    setup_logging()
     config_path = Path("./config.json")
 
     async with aiohttp.ClientSession() as session:
