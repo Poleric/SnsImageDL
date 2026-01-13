@@ -38,6 +38,8 @@ class Downloader(Cog):
         return results
 
     async def _save(self, results: Collection[QueryResult]) -> None:
+        self.bot.output_directory.mkdir(parents=True, exist_ok=True)
+
         for result in results:
             (await result.download()) \
                 .tag() \
