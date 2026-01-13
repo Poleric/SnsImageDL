@@ -1,0 +1,28 @@
+{
+    "bot": {
+        "token": "",
+        "command_prefix": ""
+    },
+    "watch_channel_ids": [],
+    "output_directory": "./media",
+    "extractors": [
+        {
+            "type": "twitter"
+        },
+        {
+            "type": "pixiv",
+            "refresh_token": ""
+        }
+    ],
+    "taggers": [
+        {
+            "type": "exif"
+        },
+        {
+            "type": "xmp"
+        },
+        {
+            "type": "jpeg"
+        }
+    ]
+}

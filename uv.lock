@@ -562,6 +562,7 @@ name = "snsimagedl"
 version = "1.0.0"
 source = { virtual = "." }
 dependencies = [
+    { name = "msgspec" },
     { name = "snsimagedl-bot" },
     { name = "snsimagedl-dcinside" },
     { name = "snsimagedl-lib" },
@@ -571,6 +572,7 @@ dependencies = [
 
 [package.metadata]
 requires-dist = [
+    { name = "msgspec" },
     { name = "snsimagedl-bot", editable = "packages/snsimagedl-bot" },
     { name = "snsimagedl-dcinside", editable = "packages/snsimagedl-dcinside" },
     { name = "snsimagedl-lib", editable = "packages/snsimagedl-lib" },

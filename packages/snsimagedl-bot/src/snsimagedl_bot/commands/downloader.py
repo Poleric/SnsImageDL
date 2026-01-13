@@ -28,14 +28,13 @@ class Downloader(Cog):
             bot: SnsImageDlBot,
     ):
         self.bot = bot
-        self.downloader = self.bot.config.downloader
 
     async def _query(self, message: Message, /) -> Collection[QueryResult]:
         urls = self.URL_PATTERN.findall(message.content)
 
         results = []
         for url in urls:
-            for result in await self.downloader.query(url):
+            for result in await self.bot.downloader.query(url):
                 results.append(result)
         return results
 
@@ -43,7 +42,7 @@ class Downloader(Cog):
         for result in results:
             (await result.download()) \
                 .tag() \
-                .save_to(self.bot.config.output_directory / result.metadata.filename)
+                .save_to(self.bot.output_directory / result.metadata.filename)
 
     @staticmethod
     def _get_success_embed(results: Collection[QueryResult]) -> Embed:
@@ -58,7 +57,7 @@ class Downloader(Cog):
         if message.author == self.bot.user:
             return
 
-        if message.channel.id not in self.bot.config.watch_channel_ids:
+        if message.channel.id not in self.bot.watch_channel_ids:
             return
 
         results = await self._query(message)
@@ -74,7 +73,7 @@ class Downloader(Cog):
 
     @save.command(name="url")
     async def save_url(self, ctx: Context, url: str) -> None:
-        results = await self.downloader.query(url)
+        results = await self.bot.downloader.query(url)
         if results:
             await self._save(results)
 
@@ -132,12 +131,12 @@ class Downloader(Cog):
     async def add_channel(self, ctx: Context, channel: TextChannel | VoiceChannel | None = None) -> None:
         channel = channel or ctx.channel
 
-        self.bot.config.watch_channel_ids.add(channel.id)
+        self.bot.watch_channel_ids.add(channel.id)
         await ctx.reply(f"{channel.mention} added to the watch channel list.", ephemeral=True)
 
     @channel.command(name="list")
     async def list_channels(self, ctx: Context) -> None:
-        if self.bot.config.watch_channel_ids:
+        if self.bot.watch_channel_ids:
             await ctx.reply(
                 "Watching channels:\n" +
                 "\n".join(self.bot.get_channel(channel_id).mention for channel_id in self.bot.config.watch_channel_ids),
@@ -150,5 +149,5 @@ class Downloader(Cog):
     async def remove_channel(self, ctx: Context, channel: TextChannel | VoiceChannel | None = None) -> None:
         channel = channel or ctx.channel
 
-        self.bot.config.watch_channel_ids.remove(channel.id)
+        self.bot.watch_channel_ids.remove(channel.id)
         await ctx.reply(f"{channel.mention} is removed from the watch channel list.", ephemeral=True)
