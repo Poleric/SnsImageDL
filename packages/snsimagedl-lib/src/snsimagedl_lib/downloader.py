@@ -3,6 +3,7 @@ from pathlib import Path
 from typing import Collection, TYPE_CHECKING
 
 from snsimagedl_lib import Extractor, FileTagger, Metadata
+from snsimagedl_lib.exceptions import UnsupportedLink
 
 if TYPE_CHECKING:
     from _typeshed import SupportsWrite
@@ -69,7 +70,7 @@ class MediaDownloader:
             try:
                 for metadata in await extractor.query(query):
                     results.append(QueryResult(extractor, metadata, self))
-            except NotImplementedError:
+            except NotImplementedError, UnsupportedLink:
                 pass
 
         return results
