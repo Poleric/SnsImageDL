@@ -69,7 +69,7 @@ class MediaDownloader:
             try:
                 for metadata in await extractor.query(query):
                     results.append(QueryResult(extractor, metadata, self))
-            except NotImplemented:
+            except NotImplementedError:
                 pass
 
         return results
