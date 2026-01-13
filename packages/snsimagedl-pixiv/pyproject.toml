@@ -4,8 +4,9 @@ version = "1.0.0"
 description = "A snsimagedl pixiv extension for downloading from Pixiv"
 requires-python = ">=3.14,<4.0"
 dependencies = [
-    "aiohttp[speedups]>=3.13.2",
-    "pixivpy3>=3.7.5"
+    "asyncio",
+    "pixivpy3>=3.7.5",
+    "msgspec"
 ]
 authors = [
     { name = "DizzyNight", email = "laffey@dizzynight.moe" }
