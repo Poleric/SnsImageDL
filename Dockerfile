@@ -4,6 +4,7 @@ COPY --from=ghcr.io/astral-sh/uv:latest /uv /uvx /bin/
 
 WORKDIR /usr/src/app/
 
+ENV UV_COMPILE_BYTECODE=1
 ENV UV_NO_DEV=1
 
 RUN --mount=type=cache,target=/root/.cache/uv \
