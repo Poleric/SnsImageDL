@@ -114,6 +114,7 @@ class TwitterExtractor(Extractor):
                 ),
                 keywords=[hashtag.text for hashtag in tweet.entities.hashtags]
             ))
+        return results
 
     @override
     async def download(self, media: Metadata) -> bytes:
