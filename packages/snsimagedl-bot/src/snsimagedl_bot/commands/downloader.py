@@ -67,8 +67,9 @@ class Downloader(Cog):
             await message.add_reaction("❌")
 
     @commands.hybrid_group()
-    async def save(self, ctx: Context, message: Message) -> None:
-        pass
+    async def save(self, ctx: Context, message: Message | None = None) -> None:
+        if not ctx.invoked_subcommand and message is not None:
+            await self.save_message(ctx, message)
 
     @save.command(name="url")
     async def save_url(self, ctx: Context, url: str) -> None:
