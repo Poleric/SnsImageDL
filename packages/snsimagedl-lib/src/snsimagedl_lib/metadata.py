@@ -17,15 +17,15 @@ class ArtistMetadata:
 
 @dataclass(slots=True, frozen=True)
 class Metadata:
-    title: str
     filename: str
-    description: str
-    webpage_url: str
     source_url: str
-    created_at: datetime
-    artist: ArtistMetadata
-    keywords: list[str]
-    type: list[str]
+    webpage_url: str
+    title: str | None = None
+    description: str | None = None
+    created_at: datetime | None = None
+    artist: ArtistMetadata | None = None
+    keywords: list[str] | None = None
+    type: list[str] | None = None
 
     @property
     def file_extension(self) -> str:
