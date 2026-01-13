@@ -1,11 +1,14 @@
 from __future__ import annotations
 
+import re
 from datetime import datetime
-from typing import TYPE_CHECKING
+from typing import TYPE_CHECKING, Collection, ClassVar
 
-from discord import Message, VoiceChannel, TextChannel
+from discord import Message, VoiceChannel, TextChannel, Embed
 from discord.ext import commands
 from discord.ext.commands import Cog, Context
+
+from snsimagedl_lib import QueryResult
 
 if TYPE_CHECKING:
     from snsimagedl_bot.bot import SnsImageDlBot
@@ -16,11 +19,39 @@ __all__ = (
 
 
 class Downloader(Cog):
+    URL_PATTERN: ClassVar[re.Pattern] = re.compile(
+        r"https?://(?:www\.)?[-a-zA-Z0-9@:%._+~#=]{1,256}\.[a-zA-Z0-9()]{1,6}\b[-a-zA-Z0-9()@:%_+.~#?&/=]*"
+    )
+
     def __init__(
             self,
             bot: SnsImageDlBot,
     ):
         self.bot = bot
+        self.downloader = self.bot.config.downloader
+
+    async def _query(self, message: Message, /) -> Collection[QueryResult]:
+        urls = self.URL_PATTERN.findall(message.content)
+
+        results = []
+        for url in urls:
+            for result in await self.downloader.query(url):
+                results.append(result)
+        return results
+
+    async def _save(self, results: Collection[QueryResult]) -> None:
+        for result in results:
+            (await result.download()) \
+                .tag() \
+                .save_to(self.bot.config.output_directory / result.metadata.filename)
+
+    @staticmethod
+    def _get_success_embed(results: Collection[QueryResult]) -> Embed:
+        embed = Embed(title="Success")
+        embed.add_field(name="Downloaded:", value="\n".join(
+            f"[{result.metadata.filename}]({result.metadata.source_url})" for result in results))
+
+        return embed
 
     @Cog.listener("on_message")
     async def autosave(self, message: Message, /) -> None:
@@ -30,8 +61,12 @@ class Downloader(Cog):
         if message.channel.id not in self.bot.config.watch_channel_ids:
             return
 
-        await self.bot.message_saver.save(message)
-        await message.add_reaction("✅")
+        results = await self._query(message)
+        if results:
+            await self._save(results)
+            await message.add_reaction("✅")
+        else:
+            await message.add_reaction("❌")
 
     @commands.hybrid_group()
     async def save(self, ctx: Context, message: Message) -> None:
@@ -39,14 +74,27 @@ class Downloader(Cog):
 
     @save.command(name="url")
     async def save_url(self, ctx: Context, url: str) -> None:
-        await self.bot.url_saver.save(url)
-        await ctx.reply(f"Saved media.", ephemeral=True)
+        results = await self.downloader.query(url)
+        if results:
+            await self._save(results)
+
+            embed = self._get_success_embed(results)
+            await ctx.reply(embed=embed, ephemeral=True)
+        else:
+            await ctx.reply("No media found.", ephemeral=True)
 
     @save.command(name="message")
     async def save_message(self, ctx: Context, message: Message) -> None:
-        await self.bot.message_saver.save(message)
-        await message.add_reaction("✅")
-        await ctx.reply(f"Saved media.", ephemeral=True)
+        results = await self._query(message)
+        if results:
+            await self._save(results)
+            await message.add_reaction("✅")
+
+            embed = self._get_success_embed(results)
+            await ctx.reply(embed=embed, ephemeral=True)
+        else:
+            await message.add_reaction("❌")
+            await ctx.reply("No media found.", ephemeral=True)
 
     @save.command(name="from")
     async def save_from(
@@ -58,11 +106,22 @@ class Downloader(Cog):
     ) -> None:
         channel = channel or ctx.channel
 
+        all_results = []
         async for message in channel.history(before=before, after=after):
-            await self.bot.message_saver.save(message)
-            await message.add_reaction("✅")
+            results = await self._query(message)
+            if results:
+                await self._save(results)
+                await message.add_reaction("✅")
 
-        await ctx.reply(f"Saved media.", ephemeral=True)
+                all_results.extend(results)
+            else:
+                await message.add_reaction("❌")
+
+        if all_results:
+            embed = self._get_success_embed(all_results)
+            await ctx.reply(embed=embed, ephemeral=True)
+        else:
+            await ctx.reply("No media found.", ephemeral=True)
 
     @commands.hybrid_group()
     async def channel(self, ctx: Context) -> None:
