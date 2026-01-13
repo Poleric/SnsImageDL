@@ -100,8 +100,8 @@ class Downloader(Cog):
             self,
             ctx: Context,
             channel: TextChannel | VoiceChannel | None = None,
-            before: datetime | None = None,
-            after: datetime | None = None
+            before: Message | None = None,
+            after: Message | None = None
     ) -> None:
         channel = channel or ctx.channel
 
