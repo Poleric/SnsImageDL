@@ -634,10 +634,14 @@ version = "1.0.0"
 source = { editable = "packages/snsimagedl-twitter" }
 dependencies = [
     { name = "aiohttp", extra = ["speedups"] },
+    { name = "msgspec" },
 ]
 
 [package.metadata]
-requires-dist = [{ name = "aiohttp", extras = ["speedups"], specifier = ">=3.13.2" }]
+requires-dist = [
+    { name = "aiohttp", extras = ["speedups"], specifier = ">=3.13.2" },
+    { name = "msgspec" },
+]
 
 [[package]]
 name = "typing-extensions"

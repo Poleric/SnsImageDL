@@ -5,6 +5,7 @@ description = "A snsimagedl twitter extension for downloading from Twitter (X)"
 requires-python = ">=3.14,<4.0"
 dependencies = [
     "aiohttp[speedups]>=3.13.2",
+    "msgspec"
 ]
 authors = [
     {name = "DizzyNight", email = "laffey@dizzynight.moe"}
