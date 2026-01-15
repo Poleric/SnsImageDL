@@ -1,19 +1,28 @@
-from typing import Collection
+from pathlib import Path
+from typing import Collection, Self, TYPE_CHECKING
 
 import aiohttp
+import msgspec
 from msgspec import Struct
 
 from snsimagedl_lib import Extractor, FileTagger, ExifTagger, XmpTagger, JpegCommentTagger, MediaDownloader
 from snsimagedl_pixiv import PixivExtractor
 from snsimagedl_twitter import TwitterExtractor
 
+if TYPE_CHECKING:
+    from _typeshed import SupportsWrite, SupportsRead
+
 __all__ = (
-    "session",
     "AppConfig",
+    "set_global_session"
 )
 
-
 session: aiohttp.ClientSession | None = None
+
+
+def set_global_session(ses: aiohttp.ClientSession, /) -> None:
+    global session
+    session = ses
 
 
 def config_namer(name: str) -> str:
@@ -22,8 +31,6 @@ def config_namer(name: str) -> str:
 
 
 class ExtractorConfig[T: Extractor](Struct, tag_field="type", tag=config_namer):
-    output_directory: str | None = None
-
     @property
     def instance(self) -> T:
         raise NotImplementedError
@@ -81,10 +88,29 @@ class AppConfig(Struct, kw_only=True):
     extractors: Collection[TwitterConfig | PixivConfig] = []
     taggers: Collection[ExifConfig | XmpConfig | JpegConfig] = []
 
-    @property
-    def downloader(self) -> MediaDownloader:
+    def create_downloader(self) -> MediaDownloader:
         return MediaDownloader(
             [config.instance for config in self.extractors],
             [config.instance for config in self.taggers]
         )
 
+    def save(self, fp: str | Path | SupportsWrite[bytes]) -> None:
+        if isinstance(fp, str):
+            fp = Path(fp)
+
+        if isinstance(fp, Path):
+            with fp.open("wb") as f:
+                f.write(msgspec.json.encode(self))
+        else:
+            fp.write(msgspec.json.encode(self))
+
+    @classmethod
+    def from_config(cls, fp: str | Path | SupportsRead[bytes]) -> Self:
+        if isinstance(fp, str):
+            fp = Path(fp)
+
+        if isinstance(fp, Path):
+            with fp.open("rb") as f:
+                return msgspec.json.decode(f.read(), type=cls)
+        else:
+            return msgspec.json.decode(fp.read(), type=cls)

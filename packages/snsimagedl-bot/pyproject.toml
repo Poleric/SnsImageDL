@@ -4,7 +4,8 @@ version = "1.0.0"
 description = "A discord bot to automatically download all SNS embedded images"
 requires-python = ">=3.14,<4.0"
 dependencies = [
-    "discord.py"
+    "discord.py",
+    "msgspec"
 ]
 authors = [
     { name = "DizzyNight", email = "laffey@dizzynight.moe" }

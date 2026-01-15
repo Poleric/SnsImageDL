@@ -8,8 +8,7 @@ dependencies = [
     "snsimagedl-twitter",
     "snsimagedl-pixiv",
     "snsimagedl-dcinside",
-    "snsimagedl-bot",
-    "msgspec"
+    "snsimagedl-bot"
 ]
 authors = [
     { name = "DizzyNight", email = "laffey@dizzynight.moe" }
