@@ -7,6 +7,7 @@ from discord import Message, VoiceChannel, TextChannel, Embed
 from discord.ext import commands
 from discord.ext.commands import Cog, Context
 
+from snsimagedl_bot.formatter import FilePathFormatter, FilePathContext
 from snsimagedl_lib import QueryResult
 
 if TYPE_CHECKING:
@@ -27,6 +28,7 @@ class Downloader(Cog):
             bot: SnsImageDlBot,
     ):
         self.bot = bot
+        self.path_formatter = FilePathFormatter()
 
     async def _query(self, message: Message, /) -> Collection[QueryResult]:
         urls = self.URL_PATTERN.findall(message.content)
@@ -38,12 +40,16 @@ class Downloader(Cog):
         return results
 
     async def _save(self, results: Collection[QueryResult]) -> None:
-        self.bot.output_directory.mkdir(parents=True, exist_ok=True)
-
         for result in results:
+            path = self.path_formatter.compile_path(
+                self.bot.config.output_directory,
+                context=FilePathContext.from_query(result)
+            )
+            path.parent.mkdir(exist_ok=True, parents=True)
+
             (await result.download()) \
                 .tag() \
-                .save_to(self.bot.output_directory / result.metadata.filename)
+                .save_to(path)
 
     @staticmethod
     def _get_success_embed(results: Collection[QueryResult]) -> Embed:
@@ -58,7 +64,7 @@ class Downloader(Cog):
         if message.author == self.bot.user:
             return
 
-        if message.channel.id not in self.bot.watch_channel_ids:
+        if message.channel.id not in self.bot.config.watch_channel_ids:
             return
 
         results = await self._query(message)
@@ -133,12 +139,12 @@ class Downloader(Cog):
     async def add_channel(self, ctx: Context, channel: TextChannel | VoiceChannel | None = None) -> None:
         channel = channel or ctx.channel
 
-        self.bot.watch_channel_ids.add(channel.id)
+        self.bot.config.watch_channel_ids.add(channel.id)
         await ctx.reply(f"{channel.mention} added to the watch channel list.", ephemeral=True)
 
     @channel.command(name="list")
     async def list_channels(self, ctx: Context) -> None:
-        if self.bot.watch_channel_ids:
+        if self.bot.config.watch_channel_ids:
             await ctx.reply(
                 "Watching channels:\n" +
                 "\n".join(self.bot.get_channel(channel_id).mention for channel_id in self.bot.watch_channel_ids),
@@ -151,5 +157,5 @@ class Downloader(Cog):
     async def remove_channel(self, ctx: Context, channel: TextChannel | VoiceChannel | None = None) -> None:
         channel = channel or ctx.channel
 
-        self.bot.watch_channel_ids.remove(channel.id)
+        self.bot.config.watch_channel_ids.remove(channel.id)
         await ctx.reply(f"{channel.mention} is removed from the watch channel list.", ephemeral=True)

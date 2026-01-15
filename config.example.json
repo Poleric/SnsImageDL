@@ -4,7 +4,7 @@
         "command_prefix": ""
     },
     "watch_channel_ids": [],
-    "output_directory": "./media",
+    "output_directory": "./media/{extractor}/{filename}.{ext}",
     "extractors": [
         {
             "type": "twitter"
